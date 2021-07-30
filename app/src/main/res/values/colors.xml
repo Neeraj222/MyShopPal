@@ -15,5 +15,6 @@
     <color name="secondText">#989898</color>
 
     <color name="colorWhite">#FFFFFF</color>
+    <color name="colorSecondaryText">#989898</color>
 
 </resources>
