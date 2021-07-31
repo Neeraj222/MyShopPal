@@ -1,9 +1,11 @@
 package com.example.myshoppal.activities
-
-import androidx.appcompat.app.AppCompatActivity
+import android.content.Intent
 import android.os.Bundle
 import android.view.WindowManager
+import android.widget.TextView
+import androidx.appcompat.app.AppCompatActivity
 import com.example.myshoppal.R
+
 
 
 /**
@@ -21,15 +23,18 @@ class LoginActivity : AppCompatActivity() {
         // This is used to align the xml view to this class
         setContentView(R.layout.activity_login)
 
-        // TODO Step 1: Hide the status bar for the LoginActivity to make it full screen activity.
-        // START
         // This is used to hide the status bar and make the login screen as a full screen activity.
         // It is deprecated in the API level 30. I will update you with the alternate solution soon.
         window.setFlags(
             WindowManager.LayoutParams.FLAG_FULLSCREEN,
             WindowManager.LayoutParams.FLAG_FULLSCREEN
         )
-        // END
+        val tvRegister = findViewById<TextView>(R.id.tv_register)
+        tvRegister.setOnClickListener {
+            val intent = Intent(this@LoginActivity, RegisterActivity::class.java)
+            startActivity(intent)
+        }
 
     }
+
 }
