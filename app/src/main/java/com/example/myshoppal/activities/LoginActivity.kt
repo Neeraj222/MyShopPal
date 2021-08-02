@@ -39,8 +39,13 @@ class LoginActivity : BaseActivity(), View.OnClickListener {
         val btnLogin = findViewById<TextView>(R.id.btn_login)
         btnLogin.setOnClickListener(this)
 
-    }
+        val tvForgotPassword = findViewById<TextView>(R.id.tv_forgot_password)
+        tvForgotPassword.setOnClickListener{
+            val intent = Intent(this@LoginActivity, ForgotPassword::class.java)
+            startActivity(intent)
+        }
 
+    }
 
     override fun onClick(view: View?) {
         if (view != null) {
@@ -89,8 +94,8 @@ class LoginActivity : BaseActivity(), View.OnClickListener {
     private fun loginRegisteredUser(){
         if (validateLoginDetails()){
             showProgressDialog(resources.getString(R.string.please_wait))
-            val email = findViewById<TextView>(R.id.et_email).toString()
-            val password = findViewById<TextView>(R.id.et_password).toString()
+            val email = findViewById<TextView>(R.id.et_email).toString().trim();
+            val password = findViewById<TextView>(R.id.et_password).toString().trim();
 
             FirebaseAuth.getInstance().signInWithEmailAndPassword(email, password)
                 .addOnCompleteListener { task ->
