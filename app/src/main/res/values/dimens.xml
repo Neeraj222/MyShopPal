@@ -27,4 +27,10 @@
     <dimen name="progress_text_size">16sp</dimen>
     <!--END-->
 
+    <!--TODO Step 5: Add the String resources in the strings.xml file.-->
+    <!--START-->
+    <dimen name="forgot_password_title_textSize">18sp</dimen>
+    <dimen name="forgot_password_title_description_textSize">14sp</dimen>
+    <!--END-->
+
 </resources>

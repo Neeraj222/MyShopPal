@@ -5,10 +5,9 @@ import android.text.TextUtils
 import android.view.View
 import android.view.WindowManager
 import android.widget.TextView
-import androidx.appcompat.app.AppCompatActivity
 import com.example.myshoppal.R
 import com.google.firebase.auth.FirebaseAuth
-import org.w3c.dom.Text
+
 
 
 /**
@@ -40,18 +39,16 @@ class LoginActivity : BaseActivity(), View.OnClickListener {
         val btnLogin = findViewById<TextView>(R.id.btn_login)
         btnLogin.setOnClickListener(this)
 
-        val btnForgotPassword = findViewById<TextView>(R.id.tv_forgot_password)
-        btnForgotPassword.setOnClickListener {
-            val intent = Intent(this@LoginActivity, ForgotPassword::class.java)
-            startActivity(intent)
-        }
     }
+
 
     override fun onClick(view: View?) {
         if (view != null) {
             when (view.id) {
 
                 R.id.tv_forgot_password -> {
+                    val intent = Intent(this@LoginActivity, ForgotPassword::class.java)
+                    startActivity(intent)
 
                 }
 

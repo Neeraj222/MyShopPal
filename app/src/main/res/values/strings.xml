@@ -35,6 +35,13 @@
     <string name="registery_sucessfull">Thanks for registering.</string>
     <string name="please_wait">Please Wait</string>
 
+    <!--TODO Step 4: Add the String resources in the strings.xml file.-->
+    <!--START-->
+    <string name="title_forgot_password">FORGOT PASSWORD?</string>
+    <string name="forgot_password_title_description">Enter your username and e-mail address we\'ll send you a email to reset your password</string>
+    <string name="btn_lbl_submit">Submit</string>
+    <!--END-->
+
     <!--END-->
 
 </resources>
