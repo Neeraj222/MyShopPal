@@ -6,6 +6,10 @@ import android.text.TextUtils
 import android.view.WindowManager
 import android.widget.TextView
 import com.example.myshoppal.R
+import com.google.android.gms.tasks.OnCompleteListener
+import com.google.firebase.auth.AuthResult
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseUser
 
 
 @Suppress("DEPRECATION")
@@ -27,8 +31,7 @@ class RegisterActivity : BaseActivity() {
 
         val btnRegister = findViewById<TextView>(R.id.btn_register)
         btnRegister.setOnClickListener {
-
-            validateRegisterDetails()
+            registerUser()
         }
         // END
 
@@ -41,15 +44,14 @@ class RegisterActivity : BaseActivity() {
 
 //    private fun setupActionBar() {
 //
-//        setSupportActionBar(toolbar_register_activity)
+//        setSupportActionBar(findViewById(R.id.toolbar_register_activity))
 //
 //        val actionBar = supportActionBar
 //        if (actionBar != null) {
 //            actionBar.setDisplayHomeAsUpEnabled(true)
 //            actionBar.setHomeAsUpIndicator(R.drawable.ic_black_color_back_24)
 //        }
-//
-//        toolbar_register_activity.setNavigationOnClickListener { onBackPressed() }
+//        val toolbar = findViewById<TextView>().setNavigationOnClickListener { onBackPressed() }
 //    }
 
     private fun validateRegisterDetails(): Boolean {
@@ -101,5 +103,36 @@ class RegisterActivity : BaseActivity() {
             }
         }
     }
-    // END
+    private fun registerUser() {
+
+        // Check with validate function if the entries are valid or not.
+        if (validateRegisterDetails()) {
+            showProgressDialog(resources.getString(R.string.please_wait))
+
+            val email : String = findViewById<TextView>(R.id.et_email).text.toString()
+            val password : String = findViewById<TextView>(R.id.et_password).text.toString()
+
+            // Create an instance and create a register a user with email and password.
+            FirebaseAuth.getInstance().createUserWithEmailAndPassword(email, password)
+                .addOnCompleteListener(
+                    OnCompleteListener<AuthResult> { task ->
+                        hideProgressDialog()
+
+                        // If the registration is successfully done
+                        if (task.isSuccessful) {
+
+                            // Firebase registered user
+                            val firebaseUser: FirebaseUser = task.result!!.user!!
+
+                            showErrorSnackBar(
+                                "You are registered successfully. Your user id is ${firebaseUser.uid}",
+                                false
+                            )
+                        } else {
+                            // If the registering is not successful then show error message.
+                            showErrorSnackBar(task.exception!!.message.toString(), true)
+                        }
+                    })
+        }
+    }
 }
