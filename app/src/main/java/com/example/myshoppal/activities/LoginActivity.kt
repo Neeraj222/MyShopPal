@@ -41,7 +41,7 @@ class LoginActivity : BaseActivity(), View.OnClickListener {
             when (view.id) {
 
                 R.id.tv_forgot_password -> {
-                    
+
                 }
 
                 R.id.btn_login -> {
