@@ -37,8 +37,7 @@ class RegisterActivity : BaseActivity() {
 
         val btnLogin = findViewById<TextView>(R.id.tv_login)
         btnLogin.setOnClickListener(){
-            val intent = Intent(this@RegisterActivity, LoginActivity::class.java)
-            startActivity(intent)
+            onBackPressed()
         }
     }
 

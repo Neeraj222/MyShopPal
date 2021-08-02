@@ -7,7 +7,8 @@ import android.view.WindowManager
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import com.example.myshoppal.R
-
+import com.google.firebase.auth.FirebaseAuth
+import org.w3c.dom.Text
 
 
 /**
@@ -35,7 +36,17 @@ class LoginActivity : BaseActivity(), View.OnClickListener {
             val intent = Intent(this@LoginActivity, RegisterActivity::class.java)
             startActivity(intent)
         }
+
+        val btnLogin = findViewById<TextView>(R.id.btn_login)
+        btnLogin.setOnClickListener(this)
+
+        val btnForgotPassword = findViewById<TextView>(R.id.tv_forgot_password)
+        btnForgotPassword.setOnClickListener {
+            val intent = Intent(this@LoginActivity, ForgotPassword::class.java)
+            startActivity(intent)
+        }
     }
+
     override fun onClick(view: View?) {
         if (view != null) {
             when (view.id) {
@@ -46,9 +57,8 @@ class LoginActivity : BaseActivity(), View.OnClickListener {
 
                 R.id.btn_login -> {
 
-                    // TODO Step 6: Call the validate function.
                     // START
-                    validateLoginDetails()
+                   loginRegisteredUser()
                     // END
                 }
 
@@ -60,6 +70,7 @@ class LoginActivity : BaseActivity(), View.OnClickListener {
             }
         }
     }
+
     private fun validateLoginDetails(): Boolean {
         val email = findViewById<TextView>(R.id.et_email)
         val password = findViewById<TextView>(R.id.et_password)
@@ -73,13 +84,32 @@ class LoginActivity : BaseActivity(), View.OnClickListener {
                 false
             }
             else -> {
-                showErrorSnackBar("Your details are valid.", false)
+
                 true
             }
         }
     }
-    // END
+    private fun loginRegisteredUser(){
+        if (validateLoginDetails()){
+            showProgressDialog(resources.getString(R.string.please_wait))
+            val email = findViewById<TextView>(R.id.et_email).toString()
+            val password = findViewById<TextView>(R.id.et_password).toString()
+
+            FirebaseAuth.getInstance().signInWithEmailAndPassword(email, password)
+                .addOnCompleteListener { task ->
+                    hideProgressDialog()
+                    if(task.isSuccessful){
+                        showErrorSnackBar("You are logged in successfully", false)
+                    }else{
+                        showErrorSnackBar(task.exception!!.message.toString(),true)
+                    }
+                }
+        }
+    }
 }
+
+
+
 
 
 
