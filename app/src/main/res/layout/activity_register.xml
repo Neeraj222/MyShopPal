@@ -182,7 +182,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/txt_terms_condition_marginStart"
-                    android:text="i_agree_to_the_terms_and_conditions"
+                    android:text="I Agree To The Terms And Conditions"
                     android:textColor="@color/colorSecondaryText"
                     android:textSize="@dimen/txt_terms_and_condition_textSize" />
             </LinearLayout>

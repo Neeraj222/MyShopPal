@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.text.TextUtils
 import android.view.View
 import android.view.WindowManager
+import android.widget.EditText
 import android.widget.TextView
 import com.example.myshoppal.R
 import com.google.firebase.auth.FirebaseAuth
@@ -74,8 +75,8 @@ class LoginActivity : BaseActivity(), View.OnClickListener {
     }
 
     private fun validateLoginDetails(): Boolean {
-        val email = findViewById<TextView>(R.id.et_email)
-        val password = findViewById<TextView>(R.id.et_password)
+        val email = findViewById<EditText>(R.id.et_email)
+        val password = findViewById<EditText>(R.id.et_password)
         return when {
             TextUtils.isEmpty(email.text.toString().trim { it <= ' ' }) -> {
                 showErrorSnackBar(resources.getString(R.string.err_msg_enter_email), true)
@@ -94,8 +95,8 @@ class LoginActivity : BaseActivity(), View.OnClickListener {
     private fun loginRegisteredUser(){
         if (validateLoginDetails()){
             showProgressDialog(resources.getString(R.string.please_wait))
-            val email = findViewById<TextView>(R.id.et_email).toString().trim();
-            val password = findViewById<TextView>(R.id.et_password).toString().trim();
+            val email : String = findViewById<TextView>(R.id.et_email).text.toString()
+            val password : String = findViewById<TextView>(R.id.et_password).text.toString()
 
             FirebaseAuth.getInstance().signInWithEmailAndPassword(email, password)
                 .addOnCompleteListener { task ->

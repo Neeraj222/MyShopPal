@@ -1,6 +1,5 @@
 package com.example.myshoppal.activities
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.TextView
 import android.widget.Toast
@@ -12,18 +11,15 @@ class ForgotPassword : BaseActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_forgot_password)
 
-
-
-
         val btnSubmit = findViewById<TextView>(R.id.btn_submit)
         btnSubmit.setOnClickListener {
             // Get the email id from the input field.
-            val etEmail = findViewById<TextView>(R.id.et_email).toString().trim() { it <= ' ' }
-            if(etEmail.isEmpty()){
+            val email : String = findViewById<TextView>(R.id.et_email).text.toString()
+            if(email.isEmpty()){
                 showErrorSnackBar(resources.getString(R.string.err_msg_enter_email), true)
             }else{
                 showProgressDialog(resources.getString(R.string.please_wait))
-                FirebaseAuth.getInstance().sendPasswordResetEmail(etEmail)
+                FirebaseAuth.getInstance().sendPasswordResetEmail(email)
                     .addOnCompleteListener{
                         task ->
                         hideProgressDialog()

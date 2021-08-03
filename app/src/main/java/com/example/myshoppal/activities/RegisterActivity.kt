@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.text.TextUtils
 import android.view.WindowManager
+import android.widget.CheckBox
 import android.widget.TextView
 import com.example.myshoppal.R
 import com.google.android.gms.tasks.OnCompleteListener
@@ -43,6 +44,20 @@ class RegisterActivity : BaseActivity() {
 
 //    private fun setupActionBar() {
 //
+//
+//       val toolBar = setSupportActionBar(findViewById(R.id.toolbar_register_activity))
+//
+//        val actionBar = supportActionBar
+//        if (actionBar != null) {
+//            actionBar.setDisplayHomeAsUpEnabled(true)
+//            actionBar.setHomeAsUpIndicator(R.drawable.ic_black_color_back_24)
+//        }
+//
+//        toolBar.setNavigationOnClickListener { onBackPressed() }
+//    }
+
+//    private fun setupActionBar() {
+//
 //        setSupportActionBar(findViewById(R.id.toolbar_register_activity))
 //
 //        val actionBar = supportActionBar
@@ -50,7 +65,8 @@ class RegisterActivity : BaseActivity() {
 //            actionBar.setDisplayHomeAsUpEnabled(true)
 //            actionBar.setHomeAsUpIndicator(R.drawable.ic_black_color_back_24)
 //        }
-//        val toolbar = findViewById<TextView>().setNavigationOnClickListener { onBackPressed() }
+//        toolbar_register_activity
+//
 //    }
 
     private fun validateRegisterDetails(): Boolean {
@@ -59,7 +75,7 @@ class RegisterActivity : BaseActivity() {
         val email = findViewById<TextView>(R.id.et_email)
         val password = findViewById<TextView>(R.id.et_password)
         val confirmPassword = findViewById<TextView>(R.id.et_confirm_password)
-        val termsAndCondition = findViewById<TextView>(R.id.cb_terms_and_condition)
+        val cbTermsAndCondition = findViewById<CheckBox>(R.id.cb_terms_and_condition)
         return when {
             TextUtils.isEmpty(firstName.text.toString()) -> {
                 showErrorSnackBar(resources.getString(R.string.err_msg_enter_first_name), true)
@@ -91,10 +107,10 @@ class RegisterActivity : BaseActivity() {
                 showErrorSnackBar(resources.getString(R.string.err_msg_password_and_confirm_password_mismatch), true)
                 false
             }
-//            !termsAndCondition.isChecked -> {
-//                showErrorSnackBar(resources.getString(R.string.err_msg_agree_terms_and_condition), true)
-//                false
-//            }
+            !cbTermsAndCondition.isChecked-> {
+                showErrorSnackBar(resources.getString(R.string.err_msg_agree_terms_and_condition), true)
+                false
+            }
 
             else -> {
                 showErrorSnackBar(resources.getString(R.string.registery_sucessfull), false)
