@@ -1,6 +1,7 @@
 package com.example.myshoppal.activities
 import android.content.Intent
 import android.os.Bundle
+import android.os.Parcelable
 import android.text.TextUtils
 import android.util.Log
 import android.view.View
@@ -10,6 +11,7 @@ import android.widget.TextView
 import com.example.myshoppal.R
 import com.example.myshoppal.firestore.FirestoreClass
 import com.example.myshoppal.models.User
+import com.example.myshoppal.utils.Constants
 import com.google.firebase.auth.FirebaseAuth
 
 
@@ -124,10 +126,11 @@ class LoginActivity : BaseActivity(), View.OnClickListener {
         Log.i("First Name: ", user.firstName)
         Log.i("Last Name: ", user.lastName)
         Log.i("Email: ", user.email)
-        
+
         if (user.profileCompleted == 0) {
             // If the user profile is incomplete then launch the UserProfileActivity.
             val intent = Intent(this@LoginActivity, UserProfileActivity::class.java)
+            intent.putExtra(Constants.EXTRA_USER_DETAILS,user)
             startActivity(intent)
         } else {
             // Redirect the user to Main Screen after log in.
