@@ -5,6 +5,7 @@ import android.app.Activity
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Bundle
+import android.provider.SyncStateContract.Helpers.update
 import android.text.TextUtils
 import android.util.Log
 import android.view.View
@@ -12,6 +13,7 @@ import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import com.example.myshoppal.R
+import com.example.myshoppal.firestore.FirestoreClass
 import com.example.myshoppal.models.User
 import com.example.myshoppal.utils.Constants
 import com.example.myshoppal.utils.GlideLoader
@@ -22,6 +24,7 @@ import java.io.IOException
  * A user profile screen.
  */
 class UserProfileActivity : BaseActivity(), View.OnClickListener {
+    private lateinit var mUserDetails: User
 
     /**
      * This function is auto created by Android when the Activity Class is created.
@@ -33,21 +36,21 @@ class UserProfileActivity : BaseActivity(), View.OnClickListener {
         setContentView(R.layout.activity_user_profile)
 
         // Create a instance of the User model class.
-        var userDetails: User = User()
+
         if (intent.hasExtra(Constants.EXTRA_USER_DETAILS)) {
             // Get the user details from intent as a ParcelableExtra.
-            userDetails = intent.getParcelableExtra(Constants.EXTRA_USER_DETAILS)!!
+            mUserDetails = intent.getParcelableExtra(Constants.EXTRA_USER_DETAILS)!!
         }
 
         // Here, the some of the edittext components are disabled because it is added at a time of Registration.
         et_first_name.isEnabled = false
-        et_first_name.setText(userDetails.firstName)
+        et_first_name.setText(mUserDetails .firstName)
 
         et_last_name.isEnabled = false
-        et_last_name.setText(userDetails.lastName)
+        et_last_name.setText(mUserDetails .lastName)
 
         et_email.isEnabled = false
-        et_email.setText(userDetails.email)
+        et_email.setText(mUserDetails .email)
 
         // Assign the on click event to the user profile photo.
         iv_user_photo.setOnClickListener(this@UserProfileActivity)
@@ -85,21 +88,41 @@ class UserProfileActivity : BaseActivity(), View.OnClickListener {
                 }
                 R.id.btn_submit -> {
                     if(validateUserProfileDetails()){
-                        showErrorSnackBar("Your details are valid. You can update them.",false)
+
+                        val userHashMap = HashMap<String, Any>()
+                        val mobileNumber = et_mobile_number.text.toString().trim(){it <= ' '}
+                        val gender = if (rb_male.isChecked){
+                            Constants.MALE
+                        }else{
+                            Constants.FEMALE
+                        }
+                        //showErrorSnackBar("Your details are valid. You can update them.",false)
+
+                        if (mobileNumber.isNotEmpty()){
+                            userHashMap[Constants.MOBILE] = mobileNumber.toLong()
+                        }
+                        userHashMap[Constants.GENDER] = gender
+                        showProgressDialog(resources.getString(R.string.please_wait))
+
+                        FirestoreClass().updateUserProfileData(
+                            this@UserProfileActivity,
+                            userHashMap
+                        )
+
+
                     }
                 }
             }
         }
     }
     // END
+    fun userProfileUpdateSuccess(){
+        hideProgressDialog()
+        Toast.makeText(this@UserProfileActivity, resources.getString(R.string.msg_profile_updated),Toast.LENGTH_LONG).show()
+        startActivity(Intent(this@UserProfileActivity, MainActivity::class.java))
+        finish()
+    }
 
-    /**
-     * This function will identify the result of runtime permission after the user allows or deny permission based on the unique code.
-     *
-     * @param requestCode
-     * @param permissions
-     * @param grantResults
-     */
     override fun onRequestPermissionsResult(
         requestCode: Int,
         permissions: Array<out String>,

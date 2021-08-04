@@ -3,10 +3,10 @@ package com.example.myshoppal.firestore
 import android.app.Activity
 import android.content.Context
 import android.content.SharedPreferences
-import android.media.MediaCodec.MetricsConstants.MODE
 import android.util.Log
 import com.example.myshoppal.activities.LoginActivity
 import com.example.myshoppal.activities.RegisterActivity
+import com.example.myshoppal.activities.UserProfileActivity
 import com.example.myshoppal.models.User
 import com.example.myshoppal.utils.Constants
 import com.google.firebase.auth.FirebaseAuth
@@ -19,14 +19,9 @@ import com.google.firebase.firestore.SetOptions
  */
 class FirestoreClass {
 
-    // Access a Cloud Firestore instance.
+
     private val mFireStore = FirebaseFirestore.getInstance()
 
-    // TODO Step 7: Create a function to access the Cloud Firestore and create a collection.
-    // START
-    /**
-     * A function to make an entry of the registered user in the FireStore database.
-     */
     fun registerUser(activity: RegisterActivity, userInfo: User) {
 
         // The "users" is collection name. If the collection is already created then it will not create the same one again.
@@ -49,7 +44,7 @@ class FirestoreClass {
                 )
             }
     }
-    // END
+
     fun getCurrentUserID(): String {
         // An Instance of currentUser using FirebaseAuth
         val currentUser = FirebaseAuth.getInstance().currentUser
@@ -62,6 +57,7 @@ class FirestoreClass {
 
         return currentUserID
     }
+
     fun getUserDetails(activity: Activity) {
 
         // Here we pass the collection name from which we wants the data.
@@ -113,4 +109,36 @@ class FirestoreClass {
                 )
             }
     }
-}
+
+    fun updateUserProfileData (activity: Activity, userHashMap: HashMap<String, Any>){
+        mFireStore.collection(Constants.USERS)
+            .document(getCurrentUserID())
+            .update(userHashMap)
+            .addOnSuccessListener {
+
+                when (activity) {
+                    is UserProfileActivity -> {
+                        // Call a function of base activity for transferring the result to it.
+                        activity.userProfileUpdateSuccess()
+                    }
+                }
+                // END
+            }
+            .addOnFailureListener{ e->
+
+                when (activity) {
+                    is UserProfileActivity -> {
+                        // Hide the progress dialog if there is any error. And print the error in log.
+                        activity.hideProgressDialog()
+                    }
+                }
+
+                Log.e(
+                    activity.javaClass.simpleName,
+                    "Error while updating the user details.",
+                    e
+                )
+            }
+
+            }
+    }
