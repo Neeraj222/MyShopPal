@@ -52,12 +52,11 @@
     <string name="rb_lbl_female">FEMALE</string>
     <string name="btn_lbl_save">Save</string>
     <string name="first_name">First Name</string>
-
+    <!--END-->
+    <string name="read_storage_permission_denied"> User Access denied the permission for storage. You can also allow it from settings.</string>
     <!--END-->
 
 
-    <!--END-->
 
-    <!--END-->
 
 </resources>
