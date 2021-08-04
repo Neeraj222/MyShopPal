@@ -54,6 +54,8 @@
     <string name="first_name">First Name</string>
     <!--END-->
     <string name="read_storage_permission_denied"> User Access denied the permission for storage. You can also allow it from settings.</string>
+    <string name="image_selection_failed">Image Section Failed</string>
+    <string name="err_msg_enter_mobile_number">Please Enter A Phone Number</string>
     <!--END-->
 
 

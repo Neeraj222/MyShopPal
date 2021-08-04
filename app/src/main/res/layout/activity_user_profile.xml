@@ -1,6 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!--TODO Step 3: Design the layout for user profile screen.-->
-<!--START-->
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -12,7 +10,7 @@
         android:id="@+id/toolbar_user_profile_activity"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
-        android:background="@color/colorThemeOrange"
+        android:background="@drawable/app_gradient_color_background"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -67,7 +65,7 @@
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:background="@drawable/ic_user_placeholder" />
+                    android:background="@drawable/user_image_background" />
             </FrameLayout>
 
             <com.google.android.material.textfield.TextInputLayout
@@ -89,7 +87,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="text"
-                    android:hint="@string/first_name"
                     android:padding="@dimen/et_padding"
                     android:textColor="@color/colorPrimaryText"
                     android:textSize="@dimen/et_textSize" />
@@ -114,7 +111,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="text"
-                    android:hint="Last Name"
                     android:padding="@dimen/et_padding"
                     android:textColor="@color/colorPrimaryText"
                     android:textSize="@dimen/et_textSize" />
@@ -137,7 +133,6 @@
                 <com.example.myshoppal.utils.MSPEditText
                     android:id="@+id/et_email"
                     android:layout_width="match_parent"
-                    android:hint="Email iD"
                     android:layout_height="wrap_content"
                     android:inputType="textEmailAddress"
                     android:padding="@dimen/et_padding"
@@ -164,7 +159,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="phone"
-                    android:hint="Mobile Number"
                     android:padding="@dimen/et_padding"
                     android:textColor="@color/colorPrimaryText"
                     android:textSize="@dimen/et_textSize" />
@@ -211,7 +205,7 @@
                     android:textStyle="bold" />
             </RadioGroup>
 
-            <com.example.myshoppal.utils.MSPRadioButton
+            <com.example.myshoppal.utils.MSPButton
                 android:id="@+id/btn_submit"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -232,10 +226,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/rg_gender" />
-            <!--END-->
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
-
 </androidx.constraintlayout.widget.ConstraintLayout>
-    <!--END-->
