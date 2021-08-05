@@ -5,8 +5,11 @@ import android.content.Context
 import android.content.SharedPreferences
 import android.net.Uri
 import android.util.Log
+import androidx.fragment.app.Fragment
 import com.bumptech.glide.load.ImageHeaderParser
 import com.example.myshoppal.activities.*
+import com.example.myshoppal.databinding.FragmentDashboardBinding
+import com.example.myshoppal.fragments.ProductsFragment
 import com.example.myshoppal.models.User
 import com.example.myshoppal.utils.Constants
 import com.google.firebase.auth.FirebaseAuth
@@ -213,20 +216,51 @@ class FirestoreClass {
                 )
             }
     }
-    fun uploadProductDetails(activity: AddProductActivity, productInfo: Product){
+
+    fun uploadProductDetails(activity: AddProductActivity, productInfo: Product) {
         mFireStore.collection(Constants.PRODUCTS)
             .document()
             .set(productInfo, SetOptions.merge())
             .addOnSuccessListener {
                 activity.productUploadSuccess()
             }
-            .addOnFailureListener{e ->
+            .addOnFailureListener { e ->
                 activity.hideProgressDialog()
                 Log.e(
                     activity.javaClass.simpleName,
                     "Error",
                     e
                 )
+            }
+    }
+
+    fun getProductsList(fragment: Fragment) {
+        // The collection name for PRODUCTS
+        mFireStore.collection(Constants.PRODUCTS)
+            .whereEqualTo(Constants.USER_ID, getCurrentUserID())
+            .get() // Will get the documents snapshots.
+            .addOnSuccessListener { document ->
+
+                // Here we get the list of boards in the form of documents.
+                Log.e("Products List", document.documents.toString())
+
+                // Here we have created a new instance for Products ArrayList.
+                val productsList: ArrayList<Product> = ArrayList()
+
+                // A for loop as per the list of documents to convert them into Products ArrayList.
+                for (i in document.documents) {
+
+                    val product = i.toObject(Product::class.java)
+                    product!!.product_id = i.id
+
+                    productsList.add(product)
+
+                }
+                when(fragment){
+                    is ProductsFragment ->{
+                        fragment.successProductsListFromFireStore(productsList)
+                    }
+                }
             }
     }
 }
