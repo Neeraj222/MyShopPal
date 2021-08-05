@@ -25,6 +25,7 @@
         <entry key="app/src/main/res/layout/dialog_progress.xml" value="0.23324275362318841" />
         <entry key="app/src/main/res/layout/fragment_dashboard.xml" value="0.1" />
         <entry key="app/src/main/res/layout/fragment_order.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/fragment_product.xml" value="0.14895833333333333" />
         <entry key="app/src/main/res/menu/add_product_menu.xml" value="0.1648148148148148" />
         <entry key="app/src/main/res/menu/bottom_nav_menu.xml" value="0.14895833333333333" />
         <entry key="app/src/main/res/menu/dashboard_menu.xml" value="0.14895833333333333" />

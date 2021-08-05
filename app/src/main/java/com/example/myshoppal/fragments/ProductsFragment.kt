@@ -9,7 +9,7 @@ import com.example.myshoppal.R
 import com.example.myshoppal.activities.AddProductActivity
 import com.example.myshoppal.activities.SettingsActivity
 
-class ProductsFragment : Fragment() {
+class ProductsFragment : BaseFragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -26,8 +26,7 @@ class ProductsFragment : Fragment() {
             ViewModelProviders.of(this).get(HomeViewModel::class.java)*/
 
         val root = inflater.inflate(R.layout.fragment_product, container, false)
-        val textView: TextView = root.findViewById(R.id.text_home)
-        textView.text = "This is home Fragment"
+//
 
         /*homeViewModel.text.observe(viewLifecycleOwner, Observer {
             textView.text = it

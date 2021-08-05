@@ -86,6 +86,9 @@
     <string name="err_msg_enter_product_price">Please Enter A Product Price</string>
     <string name="err_msg_enter_product_description">Please Enter A Brief Product Description</string>
     <string name="err_msg_enter_product_quantity">Please Enter Product Quantity</string>
+    <string name="no_products_added_yet">No Products Added Yet</string>
+<!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 
     <!--END-->
 
