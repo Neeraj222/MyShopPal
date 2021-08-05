@@ -1,8 +1,7 @@
-package com.example.myshoppal.activities
+package com.example.myshoppal.activities.ui.ui.activities
 
 import android.os.Bundle
 import com.google.android.material.bottomnavigation.BottomNavigationView
-import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
@@ -11,7 +10,7 @@ import com.example.myshoppal.R
 
 import com.example.myshoppal.databinding.ActivityDashboardBinding
 
-class DashboardActivity : AppCompatActivity() {
+class DashboardActivity : BaseActivity() {
 
     private lateinit var binding: ActivityDashboardBinding
 
@@ -33,5 +32,9 @@ class DashboardActivity : AppCompatActivity() {
         )
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
+    }
+
+    override fun onBackPressed() {
+        doubleBackToExit()
     }
 }

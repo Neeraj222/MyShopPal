@@ -1,4 +1,4 @@
-package com.example.myshoppal.activities
+package com.example.myshoppal.activities.ui.ui.activities
 
 import android.os.Bundle
 import android.text.TextUtils
