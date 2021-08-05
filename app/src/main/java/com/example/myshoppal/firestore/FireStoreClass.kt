@@ -7,6 +7,7 @@ import android.net.Uri
 import android.util.Log
 import com.example.myshoppal.activities.ui.ui.activities.LoginActivity
 import com.example.myshoppal.activities.ui.ui.activities.RegisterActivity
+import com.example.myshoppal.activities.ui.ui.activities.SettingsActivity
 import com.example.myshoppal.activities.ui.ui.activities.UserProfileActivity
 import com.example.myshoppal.models.User
 import com.example.myshoppal.utils.Constants
@@ -94,6 +95,10 @@ class FirestoreClass {
                         // Call a function of base activity for transferring the result to it.
                         activity.userLoggedInSuccess(user)
                     }
+                    is SettingsActivity -> {
+                        activity.userDetailsSuccess(user)
+
+                    }
                 }
                 // END
             }
@@ -101,6 +106,9 @@ class FirestoreClass {
                 // Hide the progress dialog if there is any error. And print the error in log.
                 when (activity) {
                     is LoginActivity -> {
+                        activity.hideProgressDialog()
+                    }
+                    is SettingsActivity -> {
                         activity.hideProgressDialog()
                     }
                 }
