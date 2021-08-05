@@ -46,7 +46,8 @@
 
     <!--TODO Step 5: Add the string resources in the strings.xml file.-->
     <!--START-->
-    <string name="title_complete_profile">PROFILE</string>
+    <string name="title_complete_profile">COMPLETE PROFILE</string>
+    <string name="title_edit_profile">EDIT PROFILE</string>
     <string name="et_hint_mobile_number">Mobile Number</string>
     <string name="rb_lbl_male">MALE</string>
     <string name="rb_lbl_female">FEMALE</string>

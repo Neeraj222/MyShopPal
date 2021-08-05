@@ -17,7 +17,7 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <com.example.myshoppal.utils.MSPTextViewBold
-            android:id="@+id/tv_title"
+            android:id="@+id/tv_title_register"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:gravity="center"
