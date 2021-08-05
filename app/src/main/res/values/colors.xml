@@ -15,9 +15,10 @@
     <color name="colorSnackBarSuccess">#8BC34A</color>
     <color name="colorSnackBarError">#F72400</color>
 
-    <!--TODO Step 8: Add the color resources in the colors.xml file.-->
-    <!--START-->
     <color name="colorLightGrey">#F1F1F1</color>
-    <!--END-->
+
+    <color name="colorBorder">#E8E6E6</color>
+    <color name="colorDarkGrey">#878787</color>
+
 
 </resources>
