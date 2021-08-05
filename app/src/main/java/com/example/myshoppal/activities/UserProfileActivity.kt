@@ -4,8 +4,8 @@ import android.Manifest
 import android.app.Activity
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.net.Uri
 import android.os.Bundle
-import android.provider.SyncStateContract.Helpers.update
 import android.text.TextUtils
 import android.util.Log
 import android.view.View
@@ -20,22 +20,17 @@ import com.example.myshoppal.utils.GlideLoader
 import kotlinx.android.synthetic.main.activity_user_profile.*
 import java.io.IOException
 
-/**
- * A user profile screen.
- */
 class UserProfileActivity : BaseActivity(), View.OnClickListener {
-    private lateinit var mUserDetails: User
 
-    /**
-     * This function is auto created by Android when the Activity Class is created.
-     */
+    private lateinit var mUserDetails: User
+    private var mSelectedImageFileUri: Uri? = null
+    private var mUserProfileImageUrl: String = ""
+
     override fun onCreate(savedInstanceState: Bundle?) {
         //This call the parent constructor
         super.onCreate(savedInstanceState)
         // This is used to align the xml view to this class
         setContentView(R.layout.activity_user_profile)
-
-        // Create a instance of the User model class.
 
         if (intent.hasExtra(Constants.EXTRA_USER_DETAILS)) {
             // Get the user details from intent as a ParcelableExtra.
@@ -44,16 +39,18 @@ class UserProfileActivity : BaseActivity(), View.OnClickListener {
 
         // Here, the some of the edittext components are disabled because it is added at a time of Registration.
         et_first_name.isEnabled = false
-        et_first_name.setText(mUserDetails .firstName)
+        et_first_name.setText(mUserDetails.firstName)
 
         et_last_name.isEnabled = false
-        et_last_name.setText(mUserDetails .lastName)
+        et_last_name.setText(mUserDetails.lastName)
 
         et_email.isEnabled = false
-        et_email.setText(mUserDetails .email)
+        et_email.setText(mUserDetails.email)
 
         // Assign the on click event to the user profile photo.
         iv_user_photo.setOnClickListener(this@UserProfileActivity)
+
+        // Assign the on click event to the SAVE button.
         btn_submit.setOnClickListener(this@UserProfileActivity)
     }
 
@@ -69,12 +66,7 @@ class UserProfileActivity : BaseActivity(), View.OnClickListener {
                         )
                         == PackageManager.PERMISSION_GRANTED
                     ) {
-                        // TODO Step 3: Remove the message and Call the image selection function here when the user already have the read storage permission.
-                        // START
-                        /*showErrorSnackBar("You already have the storage permission.",false)*/
-
                         Constants.showImageChooser(this@UserProfileActivity)
-                        // END
                     } else {
                         /*Requests permissions to be granted to this application. These permissions
                          must be requested in your manifest, they should not be granted to your app,
@@ -86,43 +78,53 @@ class UserProfileActivity : BaseActivity(), View.OnClickListener {
                         )
                     }
                 }
+
                 R.id.btn_submit -> {
-                    if(validateUserProfileDetails()){
+                    // Show the progress dialog.
+                    showProgressDialog(resources.getString(R.string.please_wait))
+
+                    FirestoreClass().uploadImageToCloudStorage(
+                        this@UserProfileActivity,
+                        mSelectedImageFileUri
+                    )
+
+                    /*if (validateUserProfileDetails()) {
 
                         val userHashMap = HashMap<String, Any>()
-                        val mobileNumber = et_mobile_number.text.toString().trim(){it <= ' '}
-                        val gender = if (rb_male.isChecked){
+
+                        // Here the field which are not editable needs no update. So, we will update user Mobile Number and Gender for now.
+
+                        // Here we get the text from editText and trim the space
+                        val mobileNumber = et_mobile_number.text.toString().trim { it <= ' ' }
+
+                        val gender = if (rb_male.isChecked) {
                             Constants.MALE
-                        }else{
+                        } else {
                             Constants.FEMALE
                         }
-                        //showErrorSnackBar("Your details are valid. You can update them.",false)
 
-                        if (mobileNumber.isNotEmpty()){
+                        if (mobileNumber.isNotEmpty()) {
                             userHashMap[Constants.MOBILE] = mobileNumber.toLong()
                         }
+
                         userHashMap[Constants.GENDER] = gender
+
+
+                        // Show the progress dialog.
                         showProgressDialog(resources.getString(R.string.please_wait))
 
+                        // call the registerUser function of FireStore class to make an entry in the database.
                         FirestoreClass().updateUserProfileData(
                             this@UserProfileActivity,
                             userHashMap
                         )
+                    }*/
 
-
-                    }
+                    // END
                 }
             }
         }
     }
-    // END
-    fun userProfileUpdateSuccess(){
-        hideProgressDialog()
-        Toast.makeText(this@UserProfileActivity, resources.getString(R.string.msg_profile_updated),Toast.LENGTH_LONG).show()
-        startActivity(Intent(this@UserProfileActivity, MainActivity::class.java))
-        finish()
-    }
-
     override fun onRequestPermissionsResult(
         requestCode: Int,
         permissions: Array<out String>,
@@ -132,12 +134,7 @@ class UserProfileActivity : BaseActivity(), View.OnClickListener {
         if (requestCode == Constants.READ_STORAGE_PERMISSION_CODE) {
             //If permission is granted
             if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                // TODO Step 4: Remove the message and Call the image selection function here when the user grant the read storage permission.
-                // START
-                /*showErrorSnackBar("The storage permission is granted.",false)*/
-
                 Constants.showImageChooser(this@UserProfileActivity)
-                // END
             } else {
                 //Displaying another toast if permission is not granted
                 Toast.makeText(
@@ -149,33 +146,24 @@ class UserProfileActivity : BaseActivity(), View.OnClickListener {
         }
     }
 
-    // TODO Step 5: Receive the result after selecting image from phone storage using the unique code that we have passed at a time of selection through intent.
-    // START
-    /**
-     * Receive the result from a previous call to
-     * {@link #startActivityForResult(Intent, int)}.  This follows the
-     * related Activity API as described there in
-     * {@link Activity#onActivityResult(int, int, Intent)}.
-     *
-     * @param requestCode The integer request code originally supplied to
-     *                    startActivityForResult(), allowing you to identify who this
-     *                    result came from.
-     * @param resultCode The integer result code returned by the child activity
-     *                   through its setResult().
-     * @param data An Intent, which can return result data to the caller
-     *               (various data can be attached to Intent "extras").
-     */
     public override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (resultCode == Activity.RESULT_OK) {
             if (requestCode == Constants.PICK_IMG_REQUEST_CODE) {
                 if (data != null) {
                     try {
-                        // The uri of selected image from phone storage.
-                        val selectedImageFileUri = data.data!!
 
-//                        iv_user_photo.setImageURI(Uri.parse(selectedImageFileUri.toString()))
-                        GlideLoader(this).loadUserPicture(selectedImageFileUri, iv_user_photo)
+                        // TODO Step 2: Replace the variable with global variable.
+                        // Replace the selectedImageFileUri variable with the global variable.
+                        // START
+                        // The uri of selected image from phone storage.
+                        mSelectedImageFileUri = data.data!!
+
+                        GlideLoader(this@UserProfileActivity).loadUserPicture(
+                            mSelectedImageFileUri!!,
+                            iv_user_photo
+                        )
+                        // END
                     } catch (e: IOException) {
                         e.printStackTrace()
                         Toast.makeText(
@@ -192,6 +180,7 @@ class UserProfileActivity : BaseActivity(), View.OnClickListener {
             Log.e("Request Cancelled", "Image selection cancelled")
         }
     }
+
     private fun validateUserProfileDetails(): Boolean {
         return when {
 
@@ -210,5 +199,33 @@ class UserProfileActivity : BaseActivity(), View.OnClickListener {
         }
     }
 
+    fun userProfileUpdateSuccess() {
 
+        // Hide the progress dialog
+        hideProgressDialog()
+
+        Toast.makeText(
+            this@UserProfileActivity,
+            resources.getString(R.string.msg_profile_updated),
+            Toast.LENGTH_SHORT
+        ).show()
+
+
+        // Redirect to the Main Screen after profile completion.
+        startActivity(Intent(this@UserProfileActivity, MainActivity::class.java))
+        finish()
+    }
+
+    fun imageUploadSuccess(imageURL: String) {
+
+        // Hide the progress dialog
+        hideProgressDialog()
+
+        Toast.makeText(
+            this@UserProfileActivity,
+            "Your image is uploaded successfully. Image URL is $imageURL",
+            Toast.LENGTH_SHORT
+        ).show()
+    }
+    // END
 }
