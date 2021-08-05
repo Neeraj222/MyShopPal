@@ -8,7 +8,7 @@ import android.widget.TextView
 import androidx.fragment.app.Fragment
 import com.example.myshoppal.R
 
-class HomeFragment : Fragment() {
+class ProductFragment : Fragment() {
 
     // TODO Step 2: Remove the ViewModel class and its instance as we are not going to use it as for now.
     // START
@@ -22,7 +22,7 @@ class HomeFragment : Fragment() {
         /*homeViewModel =
             ViewModelProviders.of(this).get(HomeViewModel::class.java)*/
 
-        val root = inflater.inflate(R.layout.fragment_home, container, false)
+        val root = inflater.inflate(R.layout.fragment_product, container, false)
         val textView: TextView = root.findViewById(R.id.text_home)
         textView.text = "This is home Fragment"
 
