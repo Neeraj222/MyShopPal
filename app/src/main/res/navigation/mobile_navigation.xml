@@ -13,7 +13,7 @@
 
     <fragment
         android:id="@+id/navigation_products"
-        android:name="com.example.myshoppal.fragments.ProductFragment"
+        android:name="com.example.myshoppal.fragments.ProductsFragment"
         android:label="@string/title_dashboard"
         tools:layout="@layout/fragment_dashboard" />
 

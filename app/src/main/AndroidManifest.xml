@@ -13,26 +13,29 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MyShopPal">
         <activity
-            android:name="com.example.myshoppal.activities.SettingsActivity"
-            android:exported="true"
-            android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar"/>
+            android:name=".activities.AddProductActivity"
+            android:exported="true" />
         <activity
-            android:name="com.example.myshoppal.activities.DashboardActivity"
-            android:exported="true"
-            android:label="@string/app_name" />
-        <activity
-            android:name="com.example.myshoppal.activities.UserProfileActivity"
+            android:name=".activities.SettingsActivity"
             android:exported="true"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name="com.example.myshoppal.activities.ForgotPasswordActivity"
+            android:name=".activities.DashboardActivity"
+            android:exported="true"
+            android:label="@string/app_name" />
+        <activity
+            android:name=".activities.UserProfileActivity"
+            android:exported="true"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".activities.ForgotPasswordActivity"
             android:label=""
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name="com.example.myshoppal.activities.SplashActivity"
+            android:name=".activities.SplashActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
@@ -42,17 +45,17 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="com.example.myshoppal.activities.MainActivity"
+            android:name=".activities.MainActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name="com.example.myshoppal.activities.LoginActivity"
+            android:name=".activities.LoginActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name="com.example.myshoppal.activities.RegisterActivity"
+            android:name=".activities.RegisterActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name="com.example.myshoppal.activities.BaseActivity" />
+        <activity android:name=".activities.BaseActivity" />
     </application>
 
 </manifest>
