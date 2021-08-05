@@ -1,7 +1,7 @@
 package com.example.myshoppal.activities
 import android.content.Intent
 import android.os.Bundle
-import android.os.Parcelable
+
 import android.text.TextUtils
 import android.util.Log
 import android.view.View
@@ -14,17 +14,9 @@ import com.example.myshoppal.models.User
 import com.example.myshoppal.utils.Constants
 import com.google.firebase.auth.FirebaseAuth
 
-
-
-/**
- * Login Screen of the application.
- */
 @Suppress("DEPRECATION")
 class LoginActivity : BaseActivity(), View.OnClickListener {
 
-    /**
-     * This function is auto created by Android when the Activity Class is created.
-     */
     override fun onCreate(savedInstanceState: Bundle?) {
         //This call the parent constructor
         super.onCreate(savedInstanceState)
@@ -119,14 +111,9 @@ class LoginActivity : BaseActivity(), View.OnClickListener {
     }
     fun userLoggedInSuccess(user: User) {
 
-        // Hide the progress dialog.
+        // Hide the progress dialog
+
         hideProgressDialog()
-
-        // Print the user details in the log as of now.
-        Log.i("First Name: ", user.firstName)
-        Log.i("Last Name: ", user.lastName)
-        Log.i("Email: ", user.email)
-
         if (user.profileCompleted == 0) {
             // If the user profile is incomplete then launch the UserProfileActivity.
             val intent = Intent(this@LoginActivity, UserProfileActivity::class.java)

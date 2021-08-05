@@ -194,9 +194,11 @@ class UserProfileActivity : BaseActivity(), View.OnClickListener {
         }
         userHashMap[Constants.GENDER] = gender
 
+        userHashMap[Constants.COMPLETE_PROFILE] = 1
+
 
         // Show the progress dialog.
-        
+
 
         // call the registerUser function of FireStore class to make an entry in the database.
         FirestoreClass().updateUserProfileData(
