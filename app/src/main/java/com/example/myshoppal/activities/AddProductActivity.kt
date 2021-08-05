@@ -13,6 +13,7 @@ import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import com.example.myshoppal.R
+import com.example.myshoppal.firestore.FirestoreClass
 import com.example.myshoppal.utils.Constants
 import com.example.myshoppal.utils.GlideLoader
 import kotlinx.android.synthetic.main.activity_add_product.*
@@ -70,21 +71,23 @@ class AddProductActivity : BaseActivity(), View.OnClickListener {
 
                 R.id.btn_submit -> {
                     if(validateProductDetails()){
-                        showErrorSnackBar("Please enter all the details", false)
+                        uploadProductImage()
                     }
                 }
 
             }
         }
     }
+    private fun uploadProductImage(){
+        showProgressDialog(resources.getString(R.string.please_wait))
+        FirestoreClass().uploadImageToCloudStorage(this, mSelectedImageFileUri, Constants.USER_PROFILE_IMAGE)
+    }
 
-    /**
-     * This function will identify the result of runtime permission after the user allows or deny permission based on the unique code.
-     *
-     * @param requestCode
-     * @param permissions
-     * @param grantResults
-     */
+    fun imageUploadSuccess(imageURL: String) {
+        hideProgressDialog()
+        showErrorSnackBar("Product Image Uploaded Successfully. Image URL: $imageURL", false)
+    }
+
     override fun onRequestPermissionsResult(
         requestCode: Int,
         permissions: Array<out String>,
@@ -187,9 +190,4 @@ class AddProductActivity : BaseActivity(), View.OnClickListener {
             }
         }
     }
-
-
-
-
-
 }

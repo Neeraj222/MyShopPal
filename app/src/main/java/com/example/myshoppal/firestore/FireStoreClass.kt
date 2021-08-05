@@ -5,10 +5,8 @@ import android.content.Context
 import android.content.SharedPreferences
 import android.net.Uri
 import android.util.Log
-import com.example.myshoppal.activities.LoginActivity
-import com.example.myshoppal.activities.RegisterActivity
-import com.example.myshoppal.activities.SettingsActivity
-import com.example.myshoppal.activities.UserProfileActivity
+import com.bumptech.glide.load.ImageHeaderParser
+import com.example.myshoppal.activities.*
 import com.example.myshoppal.models.User
 import com.example.myshoppal.utils.Constants
 import com.google.firebase.auth.FirebaseAuth
@@ -156,11 +154,11 @@ class FirestoreClass {
 
     }
 
-    fun uploadImageToCloudStorage(activity: Activity, imageFileURI: Uri?) {
+    fun uploadImageToCloudStorage(activity: Activity, imageFileURI: Uri?, imageType: String) {
 
         //getting the storage reference
         val sRef: StorageReference = FirebaseStorage.getInstance().reference.child(
-            Constants.USER_PROFILE_IMAGE + System.currentTimeMillis() + "."
+            imageType + System.currentTimeMillis() + "."
                     + Constants.getFileExtension(
                 activity,
                 imageFileURI
@@ -188,6 +186,10 @@ class FirestoreClass {
                             is UserProfileActivity -> {
                                 activity.imageUploadSuccess(uri.toString())
                             }
+                            is AddProductActivity -> {
+                                activity.imageUploadSuccess(uri.toString())
+
+                            }
                         }
                         // END
                     }
@@ -197,6 +199,9 @@ class FirestoreClass {
                 // Hide the progress dialog if there is any error. And print the error in log.
                 when (activity) {
                     is UserProfileActivity -> {
+                        activity.hideProgressDialog()
+                    }
+                    is AddProductActivity -> {
                         activity.hideProgressDialog()
                     }
                 }

@@ -134,7 +134,7 @@ class UserProfileActivity : BaseActivity(), View.OnClickListener {
 
                             FirestoreClass().uploadImageToCloudStorage(
                                 this@UserProfileActivity,
-                                mSelectedImageFileUri
+                                mSelectedImageFileUri,Constants.USER_PROFILE_IMAGE
                             )
                         } else {
 
@@ -219,11 +219,7 @@ class UserProfileActivity : BaseActivity(), View.OnClickListener {
         }
     }
 
-    // TODO Step 1: Create a function to setup action bar if the user is about to edit profile.
-    // START
-    /**
-     * A function for actionBar Setup.
-     */
+
     private fun setupActionBar() {
 
         setSupportActionBar(toolbar_user_profile_activity)
