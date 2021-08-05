@@ -26,6 +26,7 @@ class AddProductActivity : BaseActivity(), View.OnClickListener {
 
     // A global variable for URI of a selected image from phone storage.
     private var mSelectedImageFileUri: Uri? = null
+    private var mProductImageUrl: String = ""
 
     // A global variable for uploaded product image URL.
     private var mProductImageURL: String = ""
@@ -83,9 +84,50 @@ class AddProductActivity : BaseActivity(), View.OnClickListener {
         FirestoreClass().uploadImageToCloudStorage(this, mSelectedImageFileUri, Constants.USER_PROFILE_IMAGE)
     }
 
-    fun imageUploadSuccess(imageURL: String) {
+    fun productUploadSuccess() {
+
+        // Hide the progress dialog
         hideProgressDialog()
-        showErrorSnackBar("Product Image Uploaded Successfully. Image URL: $imageURL", false)
+
+        Toast.makeText(
+            this@AddProductActivity,
+            resources.getString(R.string.product_uploaded_success_message),
+            Toast.LENGTH_SHORT
+        ).show()
+
+        finish()
+    }
+
+
+
+    fun imageUploadSuccess(imageURL: String) {
+//        hideProgressDialog()
+//        showErrorSnackBar("Product Image Uploaded Successfully. Image URL: $imageURL", false)
+        mProductImageURL = imageURL
+
+        uploadProductDetails()
+
+    }
+
+    private fun uploadProductDetails() {
+
+        // Get the logged in username from the SharedPreferences that we have stored at a time of login.
+        val username =
+            this.getSharedPreferences(Constants.MYSHOP_PREFERECNES, Context.MODE_PRIVATE)
+                .getString(Constants.LOGGED_IN_USER, "")!!
+
+        // Here we get the text from editText and trim the space
+        val product = Product(
+            FirestoreClass().getCurrentUserID(),
+            username,
+            et_product_title.text.toString().trim { it <= ' ' },
+            et_product_price.text.toString().trim { it <= ' ' },
+            et_product_description.text.toString().trim { it <= ' ' },
+            et_product_quantity.text.toString().trim { it <= ' ' },
+            mProductImageURL
+        )
+
+        FirestoreClass().uploadProductDetails(this,product)
     }
 
     override fun onRequestPermissionsResult(

@@ -213,5 +213,21 @@ class FirestoreClass {
                 )
             }
     }
+    fun uploadProductDetails(activity: AddProductActivity, productInfo: Product){
+        mFireStore.collection(Constants.PRODUCTS)
+            .document()
+            .set(productInfo, SetOptions.merge())
+            .addOnSuccessListener {
+                activity.productUploadSuccess()
+            }
+            .addOnFailureListener{e ->
+                activity.hideProgressDialog()
+                Log.e(
+                    activity.javaClass.simpleName,
+                    "Error",
+                    e
+                )
+            }
+    }
 }
 
