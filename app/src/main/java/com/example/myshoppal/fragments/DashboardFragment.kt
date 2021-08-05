@@ -1,4 +1,4 @@
-package com.example.myshoppal.activities.ui.ui.fragments
+package com.example.myshoppal.fragments
 
 import android.content.Intent
 import android.os.Bundle
@@ -6,7 +6,7 @@ import android.view.*
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import com.example.myshoppal.R
-import com.example.myshoppal.activities.ui.ui.activities.SettingsActivity
+import com.example.myshoppal.activities.SettingsActivity
 
 class DashboardFragment : Fragment() {
 

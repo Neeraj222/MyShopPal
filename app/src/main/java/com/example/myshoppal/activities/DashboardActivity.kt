@@ -1,6 +1,5 @@
-package com.example.myshoppal.activities.ui.ui.activities
+package com.example.myshoppal.activities
 
-import android.content.Context
 import android.os.Bundle
 import androidx.core.content.ContextCompat
 import com.google.android.material.bottomnavigation.BottomNavigationView

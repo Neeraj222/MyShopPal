@@ -1,4 +1,4 @@
-package com.example.myshoppal.activities.ui.ui.fragments
+package com.example.myshoppal.fragments
 
 import android.os.Bundle
 import android.view.LayoutInflater
