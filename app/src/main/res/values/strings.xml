@@ -58,15 +58,14 @@
     <string name="err_msg_enter_mobile_number">Please Enter A Phone Number</string>
     <string name="msg_profile_updated">Your Proifle Details Have Been Upated</string>
 
-<!--    <string name="title_activity_dashboard">DashboardActivity</string>-->
+    <!--    <string name="title_activity_dashboard">DashboardActivity</string>-->
     <string name="title_orders">Home</string>
     <string name="title_dashboard">Dashboard</string>
     <string name="title_products">Notifications</string>
     <!--END-->
 
     <string name="please_click_back_again_to_exit">Please click back again to exit.</string>
-
-
+    <string name="action_settings">Settings</string>
 
 
 </resources>
