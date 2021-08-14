@@ -15,6 +15,8 @@ import kotlinx.android.synthetic.main.activity_login.*
 /**
  * Login Screen of the application.
  */
+
+
 @Suppress("DEPRECATION")
 class LoginActivity : BaseActivity(), View.OnClickListener {
 
@@ -111,8 +113,8 @@ class LoginActivity : BaseActivity(), View.OnClickListener {
                         FirestoreClass().getUserDetails(this@LoginActivity)
                     } else {
                         // Hide the progress dialog
-                        hideProgressDialog()
-                        showErrorSnackBar(task.exception!!.message.toString(), true)
+                            hideProgressDialog()
+                            showErrorSnackBar(task.exception!!.message.toString(), true)
                     }
                 }
         }
@@ -137,4 +139,5 @@ class LoginActivity : BaseActivity(), View.OnClickListener {
         }
         finish()
     }
+
 }
