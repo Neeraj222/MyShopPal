@@ -59,11 +59,6 @@ class ProductsFragment : BaseFragment() {
         FirestoreClass().getProductsList(this@ProductsFragment)
     }
 
-    /**
-     * A function to get the successful product list from cloud firestore.
-     *
-     * @param productsList Will receive the product list from cloud firestore.
-     */
     fun successProductsListFromFireStore(productsList: ArrayList<Product>) {
 
         // Hide Progress dialog.
@@ -88,13 +83,6 @@ class ProductsFragment : BaseFragment() {
         }
     }
 
-    // TODO Step 5: Create a function that will call the delete function of FirestoreClass that will delete the product added by the user.
-    // START
-    /**
-     * A function that will call the delete function of FirestoreClass that will delete the product added by the user.
-     *
-     * @param productID To specify which product need to be deleted.
-     */
     fun deleteProduct(productID: String) {
 
         // Here we will call the delete function of the FirestoreClass. But, for now lets display the Toast message and call this function from adapter class.
