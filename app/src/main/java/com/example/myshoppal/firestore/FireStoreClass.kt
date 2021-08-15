@@ -9,6 +9,7 @@ import androidx.fragment.app.Fragment
 import com.bumptech.glide.load.ImageHeaderParser
 import com.example.myshoppal.activities.*
 import com.example.myshoppal.databinding.FragmentDashboardBinding
+import com.example.myshoppal.fragments.DashboardFragment
 import com.example.myshoppal.fragments.ProductsFragment
 import com.example.myshoppal.models.User
 import com.example.myshoppal.utils.Constants
@@ -262,6 +263,25 @@ class FirestoreClass {
                     }
                 }
             }
+    }
+    fun getDashboardItemsList(fragment: DashboardFragment){
+        mFireStore.collection(Constants.PRODUCTS)
+            .get()
+            .addOnSuccessListener { document ->
+                Log.e(fragment.javaClass.simpleName, document.documents.toString())
+                val productList: ArrayList<Product> = ArrayList()
+                for (i in document.documents){
+                    val product = i.toObject(Product::class.java)!!
+                    productList.add(product)
+                }
+                fragment.successDashboardItemList(productList)
+
+            }
+            .addOnFailureListener{
+                fragment.hideProgressDialog()
+                Log.e(fragment.javaClass.simpleName,"Error while getting dashboard item list")
+            }
+
     }
 }
 

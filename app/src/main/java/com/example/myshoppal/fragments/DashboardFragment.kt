@@ -2,13 +2,16 @@ package com.example.myshoppal.fragments
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.*
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import com.example.myshoppal.R
+import com.example.myshoppal.activities.Product
 import com.example.myshoppal.activities.SettingsActivity
+import com.example.myshoppal.firestore.FirestoreClass
 
-class DashboardFragment : Fragment() {
+class DashboardFragment : BaseFragment() {
 
     // TODO Step 5: Override the onCreate function and add the piece of code to inflate the option menu in fragment.
     // START
@@ -16,6 +19,11 @@ class DashboardFragment : Fragment() {
         super.onCreate(savedInstanceState)
         // If we want to use the option menu in fragment we need to add it.
         setHasOptionsMenu(true)
+    }
+
+    override fun onResume() {
+        super.onResume()
+        getDashboardItemsList()
     }
     // END
 
@@ -26,8 +34,6 @@ class DashboardFragment : Fragment() {
     ): View? {
 
         val root = inflater.inflate(R.layout.fragment_dashboard, container, false)
-        val textView: TextView = root.findViewById(R.id.text_dashboard)
-        textView.text = "This is dashboard Fragment"
         return root
     }
 
@@ -56,6 +62,17 @@ class DashboardFragment : Fragment() {
             }
         }
         return super.onOptionsItemSelected(item)
+    }
+    fun successDashboardItemList(dashboardItemsList: ArrayList<Product>){
+        hideProgressDialog()
+        for (i in dashboardItemsList){
+            Log.i("Item title", i.title)
+        }
+
+    }
+    private fun getDashboardItemsList() {
+        showProgressDialog(resources.getString(R.string.please_wait))
+        FirestoreClass().getDashboardItemsList(this@DashboardFragment)
     }
     // END
 }
