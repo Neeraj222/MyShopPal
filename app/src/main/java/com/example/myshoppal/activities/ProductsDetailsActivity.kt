@@ -5,7 +5,7 @@ import android.os.Bundle
 import android.util.Log
 import com.example.myshoppal.R
 import com.example.myshoppal.utils.Constants
-import kotlinx.android.synthetic.main.activity_register.*
+import kotlinx.android.synthetic.main.activity_products_details.*
 
 class ProductsDetailsActivity : AppCompatActivity() {
 
@@ -21,17 +21,16 @@ class ProductsDetailsActivity : AppCompatActivity() {
             Log.i("Product id", mProductId)
         }
     }
+
     private fun setupActionBar() {
 
-        setSupportActionBar(toolbar_register_activity)
+        setSupportActionBar(toolbar_product_details_activity)
 
         val actionBar = supportActionBar
         if (actionBar != null) {
             actionBar.setDisplayHomeAsUpEnabled(true)
             actionBar.setHomeAsUpIndicator(R.drawable.ic_black_color_back_24)
         }
-
-        toolbar_register_activity.setNavigationOnClickListener { onBackPressed() }
+        toolbar_product_details_activity.setNavigationOnClickListener { onBackPressed() }
     }
-
 }
