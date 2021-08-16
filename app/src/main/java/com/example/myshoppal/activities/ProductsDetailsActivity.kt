@@ -1,13 +1,15 @@
 package com.example.myshoppal.activities
 
-import androidx.appcompat.app.AppCompatActivity
+
 import android.os.Bundle
 import android.util.Log
 import com.example.myshoppal.R
+import com.example.myshoppal.firestore.FirestoreClass
 import com.example.myshoppal.utils.Constants
+import com.example.myshoppal.utils.GlideLoader
 import kotlinx.android.synthetic.main.activity_products_details.*
 
-class ProductsDetailsActivity : AppCompatActivity() {
+class ProductsDetailsActivity : BaseActivity() {
 
     private var mProductId: String = ""
 
@@ -20,6 +22,30 @@ class ProductsDetailsActivity : AppCompatActivity() {
             mProductId = intent.getStringExtra(Constants.EXTRA_PRODUCT_ID)!!
             Log.i("Product id", mProductId)
         }
+        getProductDetails()
+    }
+    fun productDetailsSuccess(product: Product) {
+
+        hideProgressDialog()
+
+        GlideLoader(this@ProductsDetailsActivity).loadProductPicture(
+            product.image,
+            iv_product_detail_image
+        )
+
+        tv_product_details_title.text = product.title
+        tv_product_details_price.text = "$${product.price}"
+        tv_product_details_description.text = product.description
+        tv_product_details_available_quantity.text = product.stock_quantity
+    }
+
+    private fun getProductDetails() {
+
+        // Show the product dialog
+        showProgressDialog(resources.getString(R.string.please_wait))
+
+        // Call the function of FirestoreClass to get the product details.
+        FirestoreClass().getProductDetails(this@ProductsDetailsActivity, mProductId)
     }
 
     private fun setupActionBar() {
