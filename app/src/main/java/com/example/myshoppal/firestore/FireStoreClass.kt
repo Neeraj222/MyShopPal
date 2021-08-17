@@ -10,6 +10,7 @@ import com.example.myshoppal.activities.*
 import com.example.myshoppal.fragments.DashboardFragment
 import com.example.myshoppal.fragments.ProductsFragment
 import com.example.myshoppal.models.Cart
+import com.example.myshoppal.models.Product
 import com.example.myshoppal.models.User
 import com.example.myshoppal.utils.Constants
 import com.google.firebase.auth.FirebaseAuth
@@ -318,7 +319,6 @@ class FirestoreClass {
 
     }
     fun getProductDetails(activity: ProductDetailsActivity, productId: String) {
-
         // The collection name for PRODUCTS
         mFireStore.collection(Constants.PRODUCTS)
             .document(productId)
@@ -367,6 +367,35 @@ class FirestoreClass {
                     e
                 )
             }
+    }
+    fun getCartList(activity: Activity){
+        mFireStore.collection(Constants.CART_ITEMS)
+            .whereEqualTo(Constants.USER_ID, getCurrentUserID())
+            .get()
+            .addOnSuccessListener { document ->
+                Log.e(activity.javaClass.simpleName, document.documents.toString())
+                val list: ArrayList<Cart> = ArrayList()
+
+                for (i in document.documents){
+                    val cart = i.toObject(Cart::class.java)!!
+                    cart.id = i.id
+                    list.add(cart)
+                }
+                when(activity){
+                    is CartListActivity ->{
+                        activity.successCartItemsList(list)
+                    }
+                }
+            }.addOnFailureListener{
+                e ->
+                when (activity){
+                    is CartListActivity -> {
+                        activity.hideProgressDialog()
+                    }
+                }
+                Log.e(activity.javaClass.simpleName, "Error while getting the cart list item.", e)
+            }
+
     }
 
 }

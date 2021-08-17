@@ -13,6 +13,7 @@
         <entry key="app/src/main/res/drawable/ic_vector_delete.xml" value="0.2712962962962963" />
         <entry key="app/src/main/res/drawable/ic_vector_edit.xml" value="0.16510416666666666" />
         <entry key="app/src/main/res/drawable/ic_vector_products.xml" value="0.16510416666666666" />
+        <entry key="app/src/main/res/drawable/ic_vector_remove.xml" value="0.16510416666666666" />
         <entry key="app/src/main/res/drawable/ic_vector_settings.xml" value="0.16510416666666666" />
         <entry key="app/src/main/res/drawable/item_grey_border_background.xml" value="0.16510416666666666" />
         <entry key="app/src/main/res/drawable/rv_item_image_background.xml" value="0.2712962962962963" />
@@ -24,6 +25,7 @@
         <entry key="app/src/main/res/layout/activity_forgot_password.xml" value="0.13489583333333333" />
         <entry key="app/src/main/res/layout/activity_login.xml" value="0.25" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.14895833333333333" />
+        <entry key="app/src/main/res/layout/activity_product_details.xml" value="0.165" />
         <entry key="app/src/main/res/layout/activity_products_details.xml" value="0.165" />
         <entry key="app/src/main/res/layout/activity_register.xml" value="0.13728470111448834" />
         <entry key="app/src/main/res/layout/activity_settings.xml" value="0.13489583333333333" />
@@ -32,6 +34,7 @@
         <entry key="app/src/main/res/layout/fragment_dashboard.xml" value="0.1" />
         <entry key="app/src/main/res/layout/fragment_order.xml" value="0.1" />
         <entry key="app/src/main/res/layout/fragment_product.xml" value="0.14895833333333333" />
+        <entry key="app/src/main/res/layout/item_cart_layout.xml" value="0.25" />
         <entry key="app/src/main/res/layout/item_dashboard_layout.xml" value="0.24048913043478262" />
         <entry key="app/src/main/res/layout/item_list_layout.xml" value="0.14895833333333333" />
         <entry key="app/src/main/res/menu/add_product_menu.xml" value="0.1648148148148148" />

@@ -8,9 +8,9 @@ import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.myshoppal.R
 import com.example.myshoppal.activities.AddProductActivity
-import com.example.myshoppal.activities.Product
 import com.example.myshoppal.adapters.MyProductsListAdapter
 import com.example.myshoppal.firestore.FirestoreClass
+import com.example.myshoppal.models.Product
 import kotlinx.android.synthetic.main.fragment_product.*
 
 class ProductsFragment : BaseFragment() {

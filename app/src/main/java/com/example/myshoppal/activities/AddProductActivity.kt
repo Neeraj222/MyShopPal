@@ -14,6 +14,7 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import com.example.myshoppal.R
 import com.example.myshoppal.firestore.FirestoreClass
+import com.example.myshoppal.models.Product
 import com.example.myshoppal.utils.Constants
 import com.example.myshoppal.utils.GlideLoader
 import kotlinx.android.synthetic.main.activity_add_product.*
@@ -29,7 +30,6 @@ class AddProductActivity : BaseActivity(), View.OnClickListener {
 
     // A global variable for uploaded product image URL.
     private var mProductImageURL: String = ""
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -71,65 +71,22 @@ class AddProductActivity : BaseActivity(), View.OnClickListener {
                 }
 
                 R.id.btn_submit -> {
-                    if(validateProductDetails()){
+                    if (validateProductDetails()) {
+
                         uploadProductImage()
                     }
                 }
-
             }
         }
     }
-    private fun uploadProductImage(){
-        showProgressDialog(resources.getString(R.string.please_wait))
-        FirestoreClass().uploadImageToCloudStorage(this, mSelectedImageFileUri, Constants.USER_PROFILE_IMAGE)
-    }
 
-    fun productUploadSuccess() {
-
-        // Hide the progress dialog
-        hideProgressDialog()
-
-        Toast.makeText(
-            this@AddProductActivity,
-            resources.getString(R.string.product_uploaded_success_message),
-            Toast.LENGTH_SHORT
-        ).show()
-
-        finish()
-    }
-
-
-
-    fun imageUploadSuccess(imageURL: String) {
-//        hideProgressDialog()
-//        showErrorSnackBar("Product Image Uploaded Successfully. Image URL: $imageURL", false)
-        mProductImageURL = imageURL
-
-        uploadProductDetails()
-
-    }
-
-    private fun uploadProductDetails() {
-
-        // Get the logged in username from the SharedPreferences that we have stored at a time of login.
-        val username =
-            this.getSharedPreferences(Constants.MYSHOP_PREFERECNES, Context.MODE_PRIVATE)
-                .getString(Constants.LOGGED_IN_USER, "")!!
-
-        // Here we get the text from editText and trim the space
-        val product = Product(
-            FirestoreClass().getCurrentUserID(),
-            username,
-            et_product_title.text.toString().trim { it <= ' ' },
-            et_product_price.text.toString().trim { it <= ' ' },
-            et_product_description.text.toString().trim { it <= ' ' },
-            et_product_quantity.text.toString().trim { it <= ' ' },
-            mProductImageURL
-        )
-
-        FirestoreClass().uploadProductDetails(this,product)
-    }
-
+    /**
+     * This function will identify the result of runtime permission after the user allows or deny permission based on the unique code.
+     *
+     * @param requestCode
+     * @param permissions
+     * @param grantResults
+     */
     override fun onRequestPermissionsResult(
         requestCode: Int,
         permissions: Array<out String>,
@@ -171,7 +128,7 @@ class AddProductActivity : BaseActivity(), View.OnClickListener {
 
             try {
                 // Load the product image in the ImageView.
-                GlideLoader(this@AddProductActivity).loadUserPicture(
+                GlideLoader(this@AddProductActivity).loadProductPicture(
                     mSelectedImageFileUri!!,
                     iv_product_image
                 )
@@ -181,6 +138,9 @@ class AddProductActivity : BaseActivity(), View.OnClickListener {
         }
     }
 
+    /**
+     * A function for actionBar Setup.
+     */
     private fun setupActionBar() {
 
         setSupportActionBar(toolbar_add_product_activity)
@@ -194,6 +154,9 @@ class AddProductActivity : BaseActivity(), View.OnClickListener {
         toolbar_add_product_activity.setNavigationOnClickListener { onBackPressed() }
     }
 
+    /**
+     * A function to validate the product details.
+     */
     private fun validateProductDetails(): Boolean {
         return when {
 
@@ -206,7 +169,6 @@ class AddProductActivity : BaseActivity(), View.OnClickListener {
                 showErrorSnackBar(resources.getString(R.string.err_msg_enter_product_title), true)
                 false
             }
-
 
             TextUtils.isEmpty(et_product_price.text.toString().trim { it <= ' ' }) -> {
                 showErrorSnackBar(resources.getString(R.string.err_msg_enter_product_price), true)
@@ -232,5 +194,68 @@ class AddProductActivity : BaseActivity(), View.OnClickListener {
                 true
             }
         }
+    }
+
+    /**
+     * A function to upload the selected product image to firebase cloud storage.
+     */
+    private fun uploadProductImage() {
+
+        showProgressDialog(resources.getString(R.string.please_wait))
+
+        FirestoreClass().uploadImageToCloudStorage(
+            this@AddProductActivity,
+            mSelectedImageFileUri,
+            Constants.PRODUCT_IMAGE
+        )
+    }
+
+    /**
+     * A function to get the successful result of product image upload.
+     */
+    fun imageUploadSuccess(imageURL: String) {
+
+        // Initialize the global image url variable.
+        mProductImageURL = imageURL
+
+        uploadProductDetails()
+    }
+
+    private fun uploadProductDetails() {
+
+        // Get the logged in username from the SharedPreferences that we have stored at a time of login.
+        val username =
+            this.getSharedPreferences(Constants.MYSHOP_PREFERECNES, Context.MODE_PRIVATE)
+                .getString(Constants.LOGGED_IN_USER, "")!!
+
+        // Here we get the text from editText and trim the space
+        val product = Product(
+            FirestoreClass().getCurrentUserID(),
+            username,
+            et_product_title.text.toString().trim { it <= ' ' },
+            et_product_price.text.toString().trim { it <= ' ' },
+            et_product_description.text.toString().trim { it <= ' ' },
+            et_product_quantity.text.toString().trim { it <= ' ' },
+            mProductImageURL
+        )
+
+        FirestoreClass().uploadProductDetails(this@AddProductActivity, product)
+    }
+
+    /**
+     * A function to return the successful result of Product upload.
+     */
+    fun productUploadSuccess() {
+
+        // Hide the progress dialog
+        hideProgressDialog()
+
+        Toast.makeText(
+            this@AddProductActivity,
+            resources.getString(R.string.product_uploaded_success_message),
+            Toast.LENGTH_SHORT
+        ).show()
+
+        finish()
     }
 }

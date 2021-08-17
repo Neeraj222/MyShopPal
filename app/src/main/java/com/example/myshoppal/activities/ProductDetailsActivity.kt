@@ -9,14 +9,17 @@ import android.widget.Toast
 import com.example.myshoppal.R
 import com.example.myshoppal.firestore.FirestoreClass
 import com.example.myshoppal.models.Cart
+import com.example.myshoppal.models.Product
 import com.example.myshoppal.utils.Constants
 import com.example.myshoppal.utils.GlideLoader
 import kotlinx.android.synthetic.main.activity_product_details.*
 
 class ProductDetailsActivity : BaseActivity(), View.OnClickListener {
 
-    private var mProductId: String = ""
     private lateinit var mProductDetails: Product
+
+    // A global variable for product id.
+    private var mProductId: String = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

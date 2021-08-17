@@ -8,9 +8,9 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.myshoppal.R
-import com.example.myshoppal.activities.Product
 import com.example.myshoppal.activities.ProductDetailsActivity
 import com.example.myshoppal.fragments.ProductsFragment
+import com.example.myshoppal.models.Product
 import com.example.myshoppal.utils.Constants
 import com.example.myshoppal.utils.GlideLoader
 import kotlinx.android.synthetic.main.item_list_layout.view.*

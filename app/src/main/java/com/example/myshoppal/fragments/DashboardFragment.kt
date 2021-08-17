@@ -6,12 +6,10 @@ import android.view.*
 import androidx.recyclerview.widget.GridLayoutManager
 import com.example.myshoppal.R
 import com.example.myshoppal.activities.CartListActivity
-import com.example.myshoppal.activities.Product
-import com.example.myshoppal.activities.ProductDetailsActivity
 import com.example.myshoppal.activities.SettingsActivity
 import com.example.myshoppal.adapters.DashboardItemsListAdapter
 import com.example.myshoppal.firestore.FirestoreClass
-import com.example.myshoppal.utils.Constants
+import com.example.myshoppal.models.Product
 import kotlinx.android.synthetic.main.fragment_dashboard.*
 
 class DashboardFragment : BaseFragment() {
