@@ -7,9 +7,12 @@ import com.example.myshoppal.R
 import com.example.myshoppal.adapters.CartItemsListAdapter
 import com.example.myshoppal.firestore.FirestoreClass
 import com.example.myshoppal.models.Cart
+import com.example.myshoppal.models.Product
 import kotlinx.android.synthetic.main.activity_cart_list.*
 
 class CartListActivity : BaseActivity() {
+    private lateinit var mCartListItems: ArrayList<Cart>
+    private lateinit var mProductsList: ArrayList<Product>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         //This call the parent constructor
@@ -22,8 +25,8 @@ class CartListActivity : BaseActivity() {
 
     override fun onResume() {
         super.onResume()
-
-        getCartItemsList()
+        getProductList()
+//        getCartItemsList()
     }
 
     private fun setupActionBar() {
@@ -42,26 +45,41 @@ class CartListActivity : BaseActivity() {
     private fun getCartItemsList() {
 
         // Show the progress dialog.
-        showProgressDialog(resources.getString(R.string.please_wait))
+//        showProgressDialog(resources.getString(R.string.please_wait))
 
         FirestoreClass().getCartList(this@CartListActivity)
     }
 
-    fun successCartItemsList(cartList: ArrayList<Cart>) {
+    fun successProductsListFromFireStore(productsList: ArrayList<Product>) {
+        hideProgressDialog()
+        mProductsList = productsList
+        getCartItemsList()
+    }
 
-        // Hide progress dialog.
+    private fun getProductList() {
+        showProgressDialog(resources.getString(R.string.please_wait))
+        FirestoreClass().getAllProductsList(this)
+    }
+
+
+    fun successCartItemsList(cartList: ArrayList<Cart>) {
         hideProgressDialog()
 
-        // TODO Step 2: Remove the for loop and display the list of cart items in the recycler view along with total amount.
-        // START
+        for (product in mProductsList) {
+            for (cart in cartList) {
+                if (product.product_id == cart.product_id) {
 
-        /*for (i in cartList) {
+                    cart.stock_quantity = product.stock_quantity
 
-            Log.i("Cart Item Title", i.title)
+                    if (product.stock_quantity.toInt() == 0){
+                        cart.cart_quantity = product.stock_quantity
+                    }
+                }
+            }
+        }
+        mCartListItems = cartList
 
-        }*/
-
-        if (cartList.size > 0) {
+        if (mCartListItems.size > 0) {
 
             rv_cart_items_list.visibility = View.VISIBLE
             ll_checkout.visibility = View.VISIBLE
@@ -75,12 +93,14 @@ class CartListActivity : BaseActivity() {
 
             var subTotal: Double = 0.0
 
-            for (item in cartList) {
+            for (item in mCartListItems) {
+                val availableQuantity = item.stock_quantity.toInt()
+                if (availableQuantity > 0) {
+                    val price = item.price.toDouble()
+                    val quantity = item.cart_quantity.toInt()
 
-                val price = item.price.toDouble()
-                val quantity = item.cart_quantity.toInt()
-
-                subTotal += (price * quantity)
+                    subTotal += (price * quantity)
+                }
             }
 
             tv_sub_total.text = "$$subTotal"
