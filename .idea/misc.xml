@@ -16,13 +16,13 @@
         <entry key="app/src/main/res/drawable/item_grey_border_background.xml" value="0.16510416666666666" />
         <entry key="app/src/main/res/drawable/rv_item_image_background.xml" value="0.2712962962962963" />
         <entry key="app/src/main/res/drawable/user_image_background.xml" value="0.16510416666666666" />
-        <entry key="app/src/main/res/layout/activity_add_product.xml" value="0.13489583333333333" />
+        <entry key="app/src/main/res/layout/activity_add_product.xml" value="0.165" />
         <entry key="app/src/main/res/layout/activity_base.xml" value="0.14895833333333333" />
         <entry key="app/src/main/res/layout/activity_dashboard.xml" value="0.14447463768115942" />
         <entry key="app/src/main/res/layout/activity_forgot_password.xml" value="0.13489583333333333" />
         <entry key="app/src/main/res/layout/activity_login.xml" value="0.25" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.14895833333333333" />
-        <entry key="app/src/main/res/layout/activity_products_details.xml" value="0.23731884057971014" />
+        <entry key="app/src/main/res/layout/activity_products_details.xml" value="0.165" />
         <entry key="app/src/main/res/layout/activity_register.xml" value="0.13728470111448834" />
         <entry key="app/src/main/res/layout/activity_settings.xml" value="0.13489583333333333" />
         <entry key="app/src/main/res/layout/activity_user_profile.xml" value="0.165" />

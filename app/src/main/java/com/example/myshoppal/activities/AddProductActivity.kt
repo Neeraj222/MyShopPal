@@ -26,10 +26,10 @@ class AddProductActivity : BaseActivity(), View.OnClickListener {
 
     // A global variable for URI of a selected image from phone storage.
     private var mSelectedImageFileUri: Uri? = null
-    private var mProductImageUrl: String = ""
 
     // A global variable for uploaded product image URL.
     private var mProductImageURL: String = ""
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -206,6 +206,7 @@ class AddProductActivity : BaseActivity(), View.OnClickListener {
                 showErrorSnackBar(resources.getString(R.string.err_msg_enter_product_title), true)
                 false
             }
+
 
             TextUtils.isEmpty(et_product_price.text.toString().trim { it <= ' ' }) -> {
                 showErrorSnackBar(resources.getString(R.string.err_msg_enter_product_price), true)

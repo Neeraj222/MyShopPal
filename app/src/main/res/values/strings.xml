@@ -105,6 +105,12 @@
     <string name="title_product_details">PRODUCT DETAILS</string>
     <string name="lbl_product_description">Product Description</string>
     <string name="lbl_product_details_stock_quantity">Stock Quantity</string>
+    <string name="err_msg_enter_product_id">Please Enter a ID</string>
+    <string name="btn_label_add_too_cart">Add to Cart</string>
+    <string name="btn_label_go_to_cart">Go to Cart</string>
+    <string name="success_message_item_added_to_cart">Product Was Added To Your Cart</string>
     <!--END-->
+
+
 
 </resources>

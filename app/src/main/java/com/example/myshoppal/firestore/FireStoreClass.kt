@@ -6,11 +6,10 @@ import android.content.SharedPreferences
 import android.net.Uri
 import android.util.Log
 import androidx.fragment.app.Fragment
-import com.bumptech.glide.load.ImageHeaderParser
 import com.example.myshoppal.activities.*
-import com.example.myshoppal.databinding.FragmentDashboardBinding
 import com.example.myshoppal.fragments.DashboardFragment
 import com.example.myshoppal.fragments.ProductsFragment
+import com.example.myshoppal.models.Cart
 import com.example.myshoppal.models.User
 import com.example.myshoppal.utils.Constants
 import com.google.firebase.auth.FirebaseAuth
@@ -281,6 +280,24 @@ class FirestoreClass {
                 fragment.hideProgressDialog()
                 Log.e(fragment.javaClass.simpleName,"Error while getting dashboard item list")
             }
+    }
+    fun addCartItems(activity: ProductDetailsActivity, addToCart: Cart){
+        mFireStore.collection(Constants.CART_ITEMS)
+            .document()
+            .set(addToCart, SetOptions.merge())
+            .addOnSuccessListener {
+                activity.addToCartSuccess()
+
+            }.addOnFailureListener{
+                e ->
+                activity.hideProgressDialog()
+                Log.e(
+                    activity.javaClass.simpleName,
+                    "Error while creating the documment for the cart item",
+                    e
+                )
+            }
+
 
     }
     fun deleteProduct(fragment: ProductsFragment, productId: String){
@@ -300,15 +317,15 @@ class FirestoreClass {
             }
 
     }
-    fun getProductDetails(activity: ProductsDetailsActivity, productId: String) {
+    fun getProductDetails(activity: ProductDetailsActivity, productId: String) {
 
         // The collection name for PRODUCTS
         mFireStore.collection(Constants.PRODUCTS)
             .document(productId)
             .get()
             .addOnSuccessListener { document ->
-
                 Log.e(activity.javaClass.simpleName, document.toString())
+
                 val product = document.toObject(Product::class.java)!!
                 if(product != null){
                     activity.productDetailsSuccess(product)
@@ -322,7 +339,35 @@ class FirestoreClass {
                 Log.e(activity.javaClass.simpleName, "Error while getting the product details.", e)
             }
     }
-    // END
+
+    fun checkIfItemExistInCart(activity: ProductDetailsActivity, productId: String) {
+
+        mFireStore.collection(Constants.CART_ITEMS)
+            .whereEqualTo(Constants.USER_ID, getCurrentUserID())
+            .whereEqualTo(Constants.PRODUCT_ID, productId)
+            .get()
+            .addOnSuccessListener { document ->
+
+                Log.e(activity.javaClass.simpleName, document.documents.toString())
+
+                if (document.documents.size > 0) {
+                    activity.productExistsInCart()
+                } else {
+                    activity.hideProgressDialog()
+                }
+                // END
+            }
+            .addOnFailureListener { e ->
+                // Hide the progress dialog if there is an error.
+                activity.hideProgressDialog()
+
+                Log.e(
+                    activity.javaClass.simpleName,
+                    "Error while checking the existing cart list.",
+                    e
+                )
+            }
+    }
 
 }
 
