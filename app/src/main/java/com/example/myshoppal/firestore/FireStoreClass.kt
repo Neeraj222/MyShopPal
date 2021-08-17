@@ -464,6 +464,28 @@ class FirestoreClass {
         mFireStore.collection(Constants.CART_ITEMS)
             .document(cart_id)
             .update(itemHashMap)
+            .addOnSuccessListener {
+
+                when (context){
+                    is CartListActivity -> {
+                        context.itemUpdateSucess()
+                    }
+                }
+
+            }.addOnFailureListener{
+                e ->
+                when (context) {
+                    is CartListActivity -> {
+                        context.hideProgressDialog()
+                    }
+                }
+                Log.e(
+                    context.javaClass.simpleName,
+                "Error while updating the cart item.",
+                    e
+                )
+
+            }
     }
 
 
