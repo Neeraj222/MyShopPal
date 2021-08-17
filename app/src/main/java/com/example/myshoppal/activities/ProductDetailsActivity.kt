@@ -2,10 +2,12 @@ package com.example.myshoppal.activities
 
 
 import android.annotation.SuppressLint
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
+import androidx.core.content.ContextCompat
 import com.example.myshoppal.R
 import com.example.myshoppal.firestore.FirestoreClass
 import com.example.myshoppal.models.Cart
@@ -61,10 +63,23 @@ class ProductDetailsActivity : BaseActivity(), View.OnClickListener {
         tv_product_details_description.text = product.description
         tv_product_details_available_quantity.text = product.stock_quantity
 
-        if(FirestoreClass().getCurrentUserID() == product.user_id) {
+        if(product.stock_quantity.toInt() == 0){
             hideProgressDialog()
-        }else {
-            FirestoreClass().checkIfItemExistInCart(this, mProductId)
+            btn_add_to_cart.visibility = View.GONE
+            tv_product_details_available_quantity.text =
+                resources.getString(R.string.lbl_out_of_stock)
+            tv_product_details_available_quantity.setTextColor(
+                ContextCompat.getColor(
+                    this@ProductDetailsActivity,
+                    R.color.colorSnackBarError
+                )
+            )
+        }else{
+            if(FirestoreClass().getCurrentUserID() == product.user_id) {
+                hideProgressDialog()
+            }else {
+                FirestoreClass().checkIfItemExistInCart(this, mProductId)
+            }
         }
     }
 
@@ -123,10 +138,8 @@ class ProductDetailsActivity : BaseActivity(), View.OnClickListener {
             resources.getString(R.string.success_message_item_added_to_cart),
             Toast.LENGTH_SHORT
         ).show()
-
         btn_add_to_cart.visibility = View.VISIBLE
         btn_go_to_cart.visibility = View.GONE
-
     }
 
     override fun onClick(v: View?) {
