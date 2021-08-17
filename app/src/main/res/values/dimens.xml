@@ -112,6 +112,15 @@
     <dimen name="product_details_stock_quantity_textSize">16sp</dimen>
     <!--END-->
 
+    <!--TODO Step 5: Add the dimen resources to the dimens.xml file.-->
+    <!--START-->
+    <dimen name="rv_cart_items_marginTop">16dp</dimen>
+    <dimen name="ll_checkout_padding">16dp</dimen>
+    <dimen name="checkout_label_value_textSize">18sp</dimen>
+    <!--END-->
+
+
+
 
 
 

@@ -12,6 +12,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.MyShopPal">
+
         <activity
             android:name=".activities.ProductDetailsActivity"
             android:exported="true"
@@ -63,6 +64,13 @@
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".activities.BaseActivity" />
+        <!--TODO Step 2: Update the activity tag.-->
+        <!--START-->
+        <activity android:name=".activities.CartListActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar"/>
+        <!--END-->
+
     </application>
 
 </manifest>

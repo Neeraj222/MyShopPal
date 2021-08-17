@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.*
 import androidx.recyclerview.widget.GridLayoutManager
 import com.example.myshoppal.R
+import com.example.myshoppal.activities.CartListActivity
 import com.example.myshoppal.activities.Product
 import com.example.myshoppal.activities.ProductDetailsActivity
 import com.example.myshoppal.activities.SettingsActivity
@@ -48,6 +49,12 @@ class DashboardFragment : BaseFragment() {
 
             R.id.action_settings -> {
                 startActivity(Intent(activity, SettingsActivity::class.java))
+
+                return true
+            }
+            R.id.action_cart -> {
+
+                startActivity(Intent(activity, CartListActivity::class.java))
 
                 return true
             }
