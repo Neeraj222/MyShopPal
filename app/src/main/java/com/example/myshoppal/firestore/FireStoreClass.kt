@@ -272,6 +272,7 @@ class FirestoreClass {
                 val productList: ArrayList<Product> = ArrayList()
                 for (i in document.documents){
                     val product = i.toObject(Product::class.java)!!
+                    product.product_id = i.id
                     productList.add(product)
                 }
                 fragment.successDashboardItemList(productList)
@@ -368,32 +369,43 @@ class FirestoreClass {
                 )
             }
     }
-    fun getCartList(activity: Activity){
+    fun getCartList(activity: Activity) {
+        // The collection name for PRODUCTS
         mFireStore.collection(Constants.CART_ITEMS)
             .whereEqualTo(Constants.USER_ID, getCurrentUserID())
-            .get()
+            .get() // Will get the documents snapshots.
             .addOnSuccessListener { document ->
+
+                // Here we get the list of cart items in the form of documents.
                 Log.e(activity.javaClass.simpleName, document.documents.toString())
+
+                // Here we have created a new instance for Cart Items ArrayList.
                 val list: ArrayList<Cart> = ArrayList()
 
-                for (i in document.documents){
-                    val cart = i.toObject(Cart::class.java)!!
-                    cart.id = i.id
-                    list.add(cart)
+                // A for loop as per the list of documents to convert them into Cart Items ArrayList.
+                for (i in document.documents) {
+
+                    val cartItem = i.toObject(Cart::class.java)!!
+                    cartItem.id = i.id
+
+                    list.add(cartItem)
                 }
-                when(activity){
-                    is CartListActivity ->{
+
+                when (activity) {
+                    is CartListActivity -> {
                         activity.successCartItemsList(list)
                     }
                 }
-            }.addOnFailureListener{
-                e ->
-                when (activity){
+            }
+            .addOnFailureListener { e ->
+                // Hide the progress dialog if there is an error based on the activity instance.
+                when (activity) {
                     is CartListActivity -> {
                         activity.hideProgressDialog()
                     }
                 }
-                Log.e(activity.javaClass.simpleName, "Error while getting the cart list item.", e)
+
+                Log.e(activity.javaClass.simpleName, "Error while getting the cart list items.", e)
             }
     }
 
@@ -468,7 +480,7 @@ class FirestoreClass {
 
                 when (context){
                     is CartListActivity -> {
-                        context.itemUpdateSucess()
+                        context.itemUpdateSuccess()
                     }
                 }
 

@@ -11,10 +11,20 @@ import com.example.myshoppal.models.Cart
 import com.example.myshoppal.models.Product
 import kotlinx.android.synthetic.main.activity_cart_list.*
 
+/**
+ * Cart list activity of the application.
+ */
 class CartListActivity : BaseActivity() {
-    private lateinit var mCartListItems: ArrayList<Cart>
+
+    // A global variable for the product list.
     private lateinit var mProductsList: ArrayList<Product>
 
+    // A global variable for the cart list items.
+    private lateinit var mCartListItems: ArrayList<Cart>
+
+    /**
+     * This function is auto created by Android when the Activity Class is created.
+     */
     override fun onCreate(savedInstanceState: Bundle?) {
         //This call the parent constructor
         super.onCreate(savedInstanceState)
@@ -26,10 +36,13 @@ class CartListActivity : BaseActivity() {
 
     override fun onResume() {
         super.onResume()
+
         getProductList()
-//        getCartItemsList()
     }
 
+    /**
+     * A function for actionBar Setup.
+     */
     private fun setupActionBar() {
 
         setSupportActionBar(toolbar_cart_list_activity)
@@ -43,29 +56,45 @@ class CartListActivity : BaseActivity() {
         toolbar_cart_list_activity.setNavigationOnClickListener { onBackPressed() }
     }
 
-
-
-    private fun getCartItemsList() {
+    /**
+     * A function to get product list to compare the current stock with the cart items.
+     */
+    private fun getProductList() {
 
         // Show the progress dialog.
-//        showProgressDialog(resources.getString(R.string.please_wait))
+        showProgressDialog(resources.getString(R.string.please_wait))
+
+        FirestoreClass().getAllProductsList(this@CartListActivity)
+    }
+
+    /**
+     * A function to get the success result of product list.
+     *
+     * @param productsList
+     */
+    fun successProductsListFromFireStore(productsList: ArrayList<Product>) {
+
+        mProductsList = productsList
+
+        getCartItemsList()
+    }
+
+    /**
+     * A function to get the list of cart items in the activity.
+     */
+    private fun getCartItemsList() {
 
         FirestoreClass().getCartList(this@CartListActivity)
     }
 
-    fun successProductsListFromFireStore(productsList: ArrayList<Product>) {
-        hideProgressDialog()
-        mProductsList = productsList
-        getCartItemsList()
-    }
-
-    private fun getProductList() {
-        showProgressDialog(resources.getString(R.string.please_wait))
-        FirestoreClass().getAllProductsList(this)
-    }
-
-
+    /**
+     * A function to notify the success result of the cart items list from cloud firestore.
+     *
+     * @param cartList
+     */
     fun successCartItemsList(cartList: ArrayList<Cart>) {
+
+        // Hide progress dialog.
         hideProgressDialog()
 
         for (product in mProductsList) {
@@ -74,12 +103,13 @@ class CartListActivity : BaseActivity() {
 
                     cart.stock_quantity = product.stock_quantity
 
-                    if (product.stock_quantity.toInt() == 0){
+                    if (product.stock_quantity.toInt() == 0) {
                         cart.cart_quantity = product.stock_quantity
                     }
                 }
             }
         }
+
         mCartListItems = cartList
 
         if (mCartListItems.size > 0) {
@@ -91,13 +121,15 @@ class CartListActivity : BaseActivity() {
             rv_cart_items_list.layoutManager = LinearLayoutManager(this@CartListActivity)
             rv_cart_items_list.setHasFixedSize(true)
 
-            val cartListAdapter = CartItemsListAdapter(this@CartListActivity, cartList)
+            val cartListAdapter = CartItemsListAdapter(this@CartListActivity, mCartListItems)
             rv_cart_items_list.adapter = cartListAdapter
 
             var subTotal: Double = 0.0
 
             for (item in mCartListItems) {
+
                 val availableQuantity = item.stock_quantity.toInt()
+
                 if (availableQuantity > 0) {
                     val price = item.price.toDouble()
                     val quantity = item.cart_quantity.toInt()
@@ -107,6 +139,7 @@ class CartListActivity : BaseActivity() {
             }
 
             tv_sub_total.text = "$$subTotal"
+            // Here we have kept Shipping Charge is fixed as $10 but in your case it may cary. Also, it depends on the location and total amount.
             tv_shipping_charge.text = "$10.0"
 
             if (subTotal > 0) {
@@ -124,7 +157,10 @@ class CartListActivity : BaseActivity() {
             tv_no_cart_item_found.visibility = View.VISIBLE
         }
     }
-    // END
+
+    /**
+     * A function to notify the user about the item removed from the cart list.
+     */
     fun itemRemovedSuccess() {
 
         hideProgressDialog()
@@ -137,7 +173,17 @@ class CartListActivity : BaseActivity() {
 
         getCartItemsList()
     }
-    fun itemUpdateSucess(){
+
+    // TODO Step 3: Create a function to notify the user about the item quantity updated in the cart list.
+    // START
+    /**
+     * A function to notify the user about the item quantity updated in the cart list.
+     */
+    fun itemUpdateSuccess() {
+
         hideProgressDialog()
+
+        getCartItemsList()
     }
+    // END
 }

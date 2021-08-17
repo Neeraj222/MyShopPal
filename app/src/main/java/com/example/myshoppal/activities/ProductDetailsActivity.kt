@@ -21,7 +21,7 @@ class ProductDetailsActivity : BaseActivity(), View.OnClickListener {
     private lateinit var mProductDetails: Product
 
     // A global variable for product id.
-    private var mProductId: String = ""
+    private var mProductId: String = "2lNAk3IJ0bf5Y4wVJl02"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

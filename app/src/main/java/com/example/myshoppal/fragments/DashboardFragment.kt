@@ -6,10 +6,12 @@ import android.view.*
 import androidx.recyclerview.widget.GridLayoutManager
 import com.example.myshoppal.R
 import com.example.myshoppal.activities.CartListActivity
+import com.example.myshoppal.activities.ProductDetailsActivity
 import com.example.myshoppal.activities.SettingsActivity
 import com.example.myshoppal.adapters.DashboardItemsListAdapter
 import com.example.myshoppal.firestore.FirestoreClass
 import com.example.myshoppal.models.Product
+import com.example.myshoppal.utils.Constants
 import kotlinx.android.synthetic.main.fragment_dashboard.*
 
 class DashboardFragment : BaseFragment() {
@@ -71,14 +73,14 @@ class DashboardFragment : BaseFragment() {
             val adapter = DashboardItemsListAdapter(requireActivity(), dashboardItemsList)
             rv_dashboard_items.adapter = adapter
 
-//            adapter.setOnClickListener(object: DashboardItemsListAdapter.OnClickListener{
-//                override fun onClick(position: Int, product: Product) {
-//                    val intent = Intent(context, ProductDetailsActivity::class.java)
-//                    intent.putExtra(Constants.EXTRA_PRODUCT_ID, product.product_id)
+            adapter.setOnClickListener(object: DashboardItemsListAdapter.OnClickListener{
+                override fun onClick(position: Int, product: Product) {
+                    val intent = Intent(context, ProductDetailsActivity::class.java)
+                    intent.putExtra(Constants.EXTRA_PRODUCT_ID, product.product_id)
 
-//                    startActivity(intent)
-//                }
-//            })
+                    startActivity(intent)
+                }
+            })
 
         }else{
             rv_dashboard_items.visibility = View.GONE
