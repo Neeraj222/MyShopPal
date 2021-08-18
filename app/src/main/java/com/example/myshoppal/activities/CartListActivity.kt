@@ -11,9 +11,7 @@ import com.example.myshoppal.models.Cart
 import com.example.myshoppal.models.Product
 import kotlinx.android.synthetic.main.activity_cart_list.*
 
-/**
- * Cart list activity of the application.
- */
+
 class CartListActivity : BaseActivity() {
 
     // A global variable for the product list.
@@ -22,9 +20,6 @@ class CartListActivity : BaseActivity() {
     // A global variable for the cart list items.
     private lateinit var mCartListItems: ArrayList<Cart>
 
-    /**
-     * This function is auto created by Android when the Activity Class is created.
-     */
     override fun onCreate(savedInstanceState: Bundle?) {
         //This call the parent constructor
         super.onCreate(savedInstanceState)

@@ -150,6 +150,12 @@
     <dimen name="rv_address_list_marginTop">16dp</dimen>
     <!--END-->
 
+    <!--TODO Step 5: Add the dimen resources to the dimens.xml file.-->
+    <!--START-->
+    <dimen name="add_edit_address_radio_button_height">40dp</dimen>
+    <dimen name="add_edit_address_radio_button_marginStartEnd">5dp</dimen>
+    <!--END-->
+
 
 
 

@@ -1,28 +1,21 @@
 package com.example.myshoppal.activities
 
-import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.example.myshoppal.R
-import kotlinx.android.synthetic.main.activity_address_list.*
+import kotlinx.android.synthetic.main.activity_add_edit_address.*
 
-class AddressListActivity : AppCompatActivity() {
+class AddEditAddressActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_address_list)
+        setContentView(R.layout.activity_add_edit_address)
         setupActionBar()
-
-        tv_add_address.setOnClickListener{
-            val intent = Intent(this@AddressListActivity, AddEditAddressActivity::class.java)
-            startActivity(intent)
-        }
-
     }
 
     private fun setupActionBar() {
 
-        setSupportActionBar(toolbar_address_list_activity)
+        setSupportActionBar(toolbar_add_edit_address_activity)
 
         val actionBar = supportActionBar
         if (actionBar != null) {
@@ -30,7 +23,8 @@ class AddressListActivity : AppCompatActivity() {
             actionBar.setHomeAsUpIndicator(R.drawable.ic_black_color_back_24)
         }
 
-        toolbar_address_list_activity.setNavigationOnClickListener { onBackPressed() }
+        toolbar_add_edit_address_activity.setNavigationOnClickListener { onBackPressed() }
     }
-
+    // END
 }
+// END
