@@ -5,12 +5,14 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
+import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.myshoppal.R
 import com.example.myshoppal.adapters.AddressListAdapter
 import com.example.myshoppal.firestore.FirestoreClass
 import com.example.myshoppal.models.Address
+import com.example.myshoppal.utils.SwipeToEditCallback
 import kotlinx.android.synthetic.main.activity_address_list.*
 
 class AddressListActivity : BaseActivity() {
@@ -53,11 +55,26 @@ class AddressListActivity : BaseActivity() {
 
             val addressAdapter = AddressListAdapter(this, addressList)
             rv_address_list.adapter = addressAdapter
+
+            val editSwipeHandler = object: SwipeToEditCallback(this){
+                override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
+
+                    val adapter = rv_address_list.adapter as AddressListAdapter
+                    adapter.notifyEditItem(
+                        this@AddressListActivity,
+                        viewHolder.adapterPosition
+                    )
+
+                }
+            }
+            val editItemTouchHelper = ItemTouchHelper(editSwipeHandler)
+            editItemTouchHelper.attachToRecyclerView(rv_address_list)
         }else{
             rv_address_list.visibility = View.GONE
             tv_no_address_found.visibility = View.VISIBLE
         }
     }
+
 
     private fun getAddressList() {
 
