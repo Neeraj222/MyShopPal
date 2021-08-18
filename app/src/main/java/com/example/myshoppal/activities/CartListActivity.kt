@@ -1,5 +1,6 @@
 package com.example.myshoppal.activities
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
@@ -9,6 +10,7 @@ import com.example.myshoppal.adapters.CartItemsListAdapter
 import com.example.myshoppal.firestore.FirestoreClass
 import com.example.myshoppal.models.Cart
 import com.example.myshoppal.models.Product
+import com.example.myshoppal.utils.Constants
 import kotlinx.android.synthetic.main.activity_cart_list.*
 
 
@@ -25,6 +27,14 @@ class CartListActivity : BaseActivity() {
         super.onCreate(savedInstanceState)
         // This is used to align the xml view to this class
         setContentView(R.layout.activity_cart_list)
+
+
+        btn_checkout.setOnClickListener {
+            val intent = Intent(this@CartListActivity, AddressListActivity::class.java)
+            intent.putExtra(Constants.EXTRA_SELECT_ADDRESS, true)
+            startActivity(intent)
+        }
+
 
         setupActionBar()
     }
