@@ -146,6 +146,15 @@
     <string name="lbl_other">OTHER</string>
     <!--END-->
 
+    <!--TODO Step 3: Add the string resources file to the strings.xml file.-->
+    <!--START-->
+    <string name="err_msg_please_enter_full_name">Please enter full name.</string>
+    <string name="err_msg_please_enter_phone_number">Please enter phone number.</string>
+    <string name="err_msg_please_enter_address">Please enter address.</string>
+    <string name="err_msg_please_enter_zip_code">Please enter zip-code.</string>
+    <string name="err_msg_please_enter_other_details">Please enter other details.</string>
+    <!--END-->
+
 
 
 

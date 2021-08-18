@@ -6,7 +6,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.example.myshoppal.R
 import kotlinx.android.synthetic.main.activity_address_list.*
 
-class AddressListActivity : AppCompatActivity() {
+class AddressListActivity : BaseActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
