@@ -576,9 +576,28 @@ class FirestoreClass {
             }
     }
 
+    fun deleteAddress(activity: AddressListActivity, addressId: String) {
 
+        mFireStore.collection(Constants.ADDRESSES)
+            .document(addressId)
+            .delete()
+            .addOnSuccessListener {
 
-
-
+                // TODO Step 8: Notify the success result.
+                // START
+                // Here call a function of base activity for transferring the result to it.
+                activity.deleteAddressSuccess()
+                // END
+            }
+            .addOnFailureListener { e ->
+                activity.hideProgressDialog()
+                Log.e(
+                    activity.javaClass.simpleName,
+                    "Error while deleting the address.",
+                    e
+                )
+            }
+    }
+    // END
 }
 
