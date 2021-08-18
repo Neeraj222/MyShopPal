@@ -13,6 +13,8 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MyShopPal">
 
+
+
         <activity
             android:name=".activities.ProductDetailsActivity"
             android:exported="true"
@@ -70,6 +72,10 @@
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"/>
         <!--END-->
+        <activity
+            android:name=".activities.AddressListActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar" />
 
     </application>
 
