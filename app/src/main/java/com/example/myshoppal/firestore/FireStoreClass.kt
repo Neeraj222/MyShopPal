@@ -9,6 +9,7 @@ import androidx.fragment.app.Fragment
 import com.example.myshoppal.activities.*
 import com.example.myshoppal.fragments.DashboardFragment
 import com.example.myshoppal.fragments.ProductsFragment
+import com.example.myshoppal.models.Address
 import com.example.myshoppal.models.Cart
 import com.example.myshoppal.models.Product
 import com.example.myshoppal.models.User
@@ -499,7 +500,27 @@ class FirestoreClass {
 
             }
     }
+    fun addAddress(activity: AddEditAddressActivity, addressInfo: Address) {
 
+        // Collection name address.
+        mFireStore.collection(Constants.ADDRESSES)
+            .document()
+            // Here the userInfo are Field and the SetOption is set to merge. It is for if we wants to merge
+            .set(addressInfo, SetOptions.merge())
+            .addOnSuccessListener {
+
+                activity.addUpdateAddressSuccess()
+
+            }
+            .addOnFailureListener { e ->
+                activity.hideProgressDialog()
+                Log.e(
+                    activity.javaClass.simpleName,
+                    "Error while adding the address.",
+                    e
+                )
+            }
+    }
 
 
 }

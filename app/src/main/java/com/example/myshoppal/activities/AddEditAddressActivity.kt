@@ -2,6 +2,8 @@ package com.example.myshoppal.activities
 
 import android.os.Bundle
 import android.text.TextUtils
+import android.view.View
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.myshoppal.R
 import com.example.myshoppal.firestore.FirestoreClass
@@ -15,6 +17,18 @@ class AddEditAddressActivity : BaseActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_add_edit_address)
         setupActionBar()
+
+        btn_submit_address.setOnClickListener(){saveAddressToFirestore()}
+
+        rg_type.setOnCheckedChangeListener { _, checkedId ->
+            if (checkedId == R.id.rb_other) {
+                til_other_details.visibility = View.VISIBLE
+            } else {
+                til_other_details.visibility = View.GONE
+            }
+        }
+
+
     }
 
     private fun setupActionBar() {
@@ -56,7 +70,7 @@ class AddEditAddressActivity : BaseActivity() {
                     Constants.OTHER
                 }
             }
-            
+
             val addressModel = Address(
                 FirestoreClass().getCurrentUserID(),
                 fullName,
@@ -67,7 +81,7 @@ class AddEditAddressActivity : BaseActivity() {
                 addressType,
                 otherDetails
             )
-            // END
+            FirestoreClass().addAddress(this, addressModel)
         }
     }
 
@@ -110,6 +124,20 @@ class AddEditAddressActivity : BaseActivity() {
             }
         }
     }
+    fun addUpdateAddressSuccess() {
+
+        // Hide progress dialog
+        hideProgressDialog()
+
+        Toast.makeText(
+            this@AddEditAddressActivity,
+            resources.getString(R.string.err_your_address_added_successfully),
+            Toast.LENGTH_SHORT
+        ).show()
+
+        finish()
+    }
+
 
 }
 // END
