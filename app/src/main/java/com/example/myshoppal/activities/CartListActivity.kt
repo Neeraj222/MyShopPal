@@ -76,7 +76,7 @@ class CartListActivity : BaseActivity() {
     }
 
     /**
-     * A function to get the success result of product list.
+     * A function to get the success result of product list. 
      *
      * @param productsList
      */

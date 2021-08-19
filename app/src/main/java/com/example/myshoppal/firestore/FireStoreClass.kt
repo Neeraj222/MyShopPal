@@ -276,7 +276,6 @@ class FirestoreClass {
     }
 
     fun getAllProductsList(activity: Activity) {
-        // END
         // The collection name for PRODUCTS
         mFireStore.collection(Constants.PRODUCTS)
             .get() // Will get the documents snapshots.
@@ -301,11 +300,9 @@ class FirestoreClass {
                     is CartListActivity -> {
                         activity.successProductsListFromFireStore(productsList)
                     }
-
                     is CheckoutActivity -> {
                         activity.successProductsListFromFireStore(productsList)
                     }
-                    // END
                 }
             }
             .addOnFailureListener { e ->
@@ -314,8 +311,6 @@ class FirestoreClass {
                     is CartListActivity -> {
                         activity.hideProgressDialog()
                     }
-
-
                     is CheckoutActivity -> {
                         activity.hideProgressDialog()
                     }
