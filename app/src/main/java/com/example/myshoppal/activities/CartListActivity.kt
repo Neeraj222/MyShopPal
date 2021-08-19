@@ -143,7 +143,7 @@ class CartListActivity : BaseActivity() {
             }
 
             tv_sub_total.text = "$$subTotal"
-            // Here we have kept Shipping Charge is fixed as $10 but in your case it may cary. Also, it depends on the location and total amount.
+            // Here we have kept Shipping Charge is fixed as $10 but in your case it may cary. Also, it depends on the loation and total amount.
             tv_shipping_charge.text = "$10.0"
 
             if (subTotal > 0) {

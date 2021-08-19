@@ -20,23 +20,15 @@ import kotlinx.android.synthetic.main.activity_checkout.*
  */
 class CheckoutActivity : BaseActivity() {
 
-    // A global variable for the selected address details.
+
+
+
     private var mAddressDetails: Address? = null
-
-    // A global variable for the product list.
     private lateinit var mProductsList: ArrayList<Product>
-
-    // A global variable for the cart list.
     private lateinit var mCartItemsList: ArrayList<Cart>
-
-    // TODO Step 3: Create a global variables for SubTotal and Total Amount.
-    // START
-    // A global variable for the SubTotal Amount.
     private var mSubTotal: Double = 0.0
-
-    // A global variable for the Total Amount.
     private var mTotalAmount: Double = 0.0
-    // END
+    private lateinit var mOrderDetails: Order
 
     /**
      * This function is auto created by Android when the Activity Class is created.
@@ -190,7 +182,7 @@ class CheckoutActivity : BaseActivity() {
 
         // TODO Step 5: Now prepare the order details based on all the required details.
         // START
-        val order = Order(
+        mOrderDetails = Order(
             FirestoreClass().getCurrentUserID(),
             mCartItemsList,
             mAddressDetails!!,
@@ -201,7 +193,7 @@ class CheckoutActivity : BaseActivity() {
             mTotalAmount.toString(),
             System.currentTimeMillis()
         )
-        FirestoreClass().placeOrder(this@CheckoutActivity, order)
+        FirestoreClass().placeOrder(this@CheckoutActivity, mOrderDetails)
     }
     // END
 
@@ -212,7 +204,7 @@ class CheckoutActivity : BaseActivity() {
      * A function to notify the success result of the order placed.
      */
     fun orderPlacedSuccess() {
-        FirestoreClass().updateAllDetails(this@CheckoutActivity, mCartItemsList)
+        FirestoreClass().updateAllDetails(this@CheckoutActivity, mCartItemsList, mOrderDetails)
     }
 
     fun allDetailsUpdatedSuccessfully() {

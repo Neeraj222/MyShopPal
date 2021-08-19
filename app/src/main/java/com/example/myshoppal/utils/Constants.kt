@@ -8,6 +8,9 @@ import android.webkit.MimeTypeMap
 
 object Constants {
 
+    const val SOLD_PRODUCTS: String = "sold products"
+    const val EXTRA_SOLD_PRODUCT_DETAILS: String = "extra_product_details"
+
     const val USERS: String = "users"
     const val MYSHOP_PREFERECNES: String = "MyShopPalPrefs"
     const val LOGGED_IN_USER: String = "logged_in_username"

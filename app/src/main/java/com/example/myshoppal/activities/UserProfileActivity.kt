@@ -323,7 +323,7 @@ class UserProfileActivity : BaseActivity(), View.OnClickListener {
 
         Toast.makeText(
             this@UserProfileActivity,
-            resources.getString(R.string.msg_profile_updated),
+            resources.getString(R.string.msg_profile_update_success),
             Toast.LENGTH_SHORT
         ).show()
 
