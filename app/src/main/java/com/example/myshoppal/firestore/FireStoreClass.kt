@@ -9,10 +9,7 @@ import androidx.fragment.app.Fragment
 import com.example.myshoppal.activities.*
 import com.example.myshoppal.fragments.DashboardFragment
 import com.example.myshoppal.fragments.ProductsFragment
-import com.example.myshoppal.models.Address
-import com.example.myshoppal.models.Cart
-import com.example.myshoppal.models.Product
-import com.example.myshoppal.models.User
+import com.example.myshoppal.models.*
 import com.example.myshoppal.utils.Constants
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
@@ -661,6 +658,32 @@ class FirestoreClass {
                 Log.e(
                     activity.javaClass.simpleName,
                     "Error while deleting the address.",
+                    e
+                )
+            }
+    }
+
+    fun placeOrder(activity: CheckoutActivity, order: Order) {
+
+        mFireStore.collection(Constants.ORDERS)
+            .document()
+            // Here the userInfo are Field and the SetOption is set to merge. It is for if we wants to merge
+            .set(order, SetOptions.merge())
+            .addOnSuccessListener {
+
+                // TODO Step 9: Notify the success result.
+                // START
+                // Here call a function of base activity for transferring the result to it.
+                activity.orderPlacedSuccess()
+                // END
+            }
+            .addOnFailureListener { e ->
+
+                // Hide the progress dialog if there is any error.
+                activity.hideProgressDialog()
+                Log.e(
+                    activity.javaClass.simpleName,
+                    "Error while placing an order.",
                     e
                 )
             }
