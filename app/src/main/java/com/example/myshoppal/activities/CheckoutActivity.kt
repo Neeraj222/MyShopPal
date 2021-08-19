@@ -199,13 +199,9 @@ class CheckoutActivity : BaseActivity() {
             mSubTotal.toString(),
             "10.0", // The Shipping Charge is fixed as $10 for now in our case.
             mTotalAmount.toString(),
+            System.currentTimeMillis()
         )
-        // END
-
-        // TODO Step 10: Call the function to place the order in the cloud firestore.
-        // START
         FirestoreClass().placeOrder(this@CheckoutActivity, order)
-        // END
     }
     // END
 

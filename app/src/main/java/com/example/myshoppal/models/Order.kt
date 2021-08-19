@@ -1,12 +1,8 @@
 package com.example.myshoppal.models
 
 import android.os.Parcelable
-import com.example.myshoppal.models.Address
-import com.example.myshoppal.models.Cart
 import kotlinx.android.parcel.Parcelize
 
-// TODO Step 1: Create a data model class for Order Items with required fields.
-// START
 /**
  * A data model class for Order item with required fields.
  */
@@ -20,6 +16,9 @@ data class Order(
     val sub_total_amount: String = "",
     val shipping_charge: String = "",
     val total_amount: String = "",
+    // TODO Step 4: Add the param for order date.
+    // START
+    val order_datetime: Long = 0L,
+    // END
     var id: String = ""
 ) : Parcelable
-// END
