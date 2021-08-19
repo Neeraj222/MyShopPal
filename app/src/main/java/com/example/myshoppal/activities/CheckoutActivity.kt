@@ -216,6 +216,10 @@ class CheckoutActivity : BaseActivity() {
      * A function to notify the success result of the order placed.
      */
     fun orderPlacedSuccess() {
+        FirestoreClass().updateAllDetails(this@CheckoutActivity, mCartItemsList)
+    }
+
+    fun allDetailsUpdatedSuccessfully() {
 
         hideProgressDialog()
 
@@ -226,6 +230,7 @@ class CheckoutActivity : BaseActivity() {
         intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
         startActivity(intent)
         finish()
+        // END
     }
-    // END
+
 }
