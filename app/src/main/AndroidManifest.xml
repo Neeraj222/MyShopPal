@@ -90,6 +90,12 @@
             android:theme="@style/AppTheme.NoActionBar" />
         <!--END-->
 
+        <activity
+            android:name=".activities.MyOrderDetailsActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <!--END-->
+
     </application>
 
 </manifest>
