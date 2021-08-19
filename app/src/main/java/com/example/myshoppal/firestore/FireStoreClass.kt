@@ -8,6 +8,7 @@ import android.util.Log
 import androidx.fragment.app.Fragment
 import com.example.myshoppal.activities.*
 import com.example.myshoppal.fragments.DashboardFragment
+import com.example.myshoppal.fragments.OrdersFragment
 import com.example.myshoppal.fragments.ProductsFragment
 import com.example.myshoppal.models.*
 import com.example.myshoppal.utils.Constants
@@ -728,5 +729,36 @@ class FirestoreClass {
             Log.e(activity.javaClass.simpleName, "Error while updating all the details after order placed.", e)
         }
     }
+
+    fun getMyOrdersList(fragment: OrdersFragment) {
+        mFireStore.collection(Constants.ORDERS)
+            .whereEqualTo(Constants.USER_ID, getCurrentUserID())
+            .get() // Will get the documents snapshots.
+            .addOnSuccessListener { document ->
+                Log.e(fragment.javaClass.simpleName, document.documents.toString())
+                val list: ArrayList<Order> = ArrayList()
+
+                for (i in document.documents) {
+
+                    val orderItem = i.toObject(Order::class.java)!!
+                    orderItem.id = i.id
+
+                    list.add(orderItem)
+                }
+
+                // TODO Step 7: Notify the success result to base class.
+                // START
+                fragment.populateOrdersListInUI(list)
+                // END
+            }
+            .addOnFailureListener { e ->
+                // Here call a function of base activity for transferring the result to it.
+
+                fragment.hideProgressDialog()
+
+                Log.e(fragment.javaClass.simpleName, "Error while getting the orders list.", e)
+            }
+    }
+
 
 }
