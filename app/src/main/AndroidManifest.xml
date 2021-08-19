@@ -96,6 +96,11 @@
             android:theme="@style/AppTheme.NoActionBar" />
         <!--END-->
 
+        <activity
+            android:name=".activities.SoldProductDetailsActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar" />
+
     </application>
 
 </manifest>

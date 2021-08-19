@@ -1,12 +1,15 @@
 package com.example.myshoppal.adapters
 
 import android.content.Context
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.myshoppal.R
+import com.example.myshoppal.activities.SoldProductDetailsActivity
 import com.example.myshoppal.models.SoldProduct
+import com.example.myshoppal.utils.Constants
 import com.example.myshoppal.utils.GlideLoader
 import kotlinx.android.synthetic.main.item_list_layout.view.*
 
@@ -61,6 +64,13 @@ open class SoldProductsListAdapter(
             holder.itemView.tv_item_price.text = "$${model.price}"
 
             holder.itemView.ib_delete_product.visibility = View.GONE
+
+            holder.itemView.setOnClickListener{
+                val intent = Intent(context, SoldProductDetailsActivity::class.java)
+                intent.putExtra(Constants.EXTRA_SOLD_PRODUCT_DETAILS,model)
+                context.startActivity(intent)
+            }
+
         }
     }
 

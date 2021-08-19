@@ -13,7 +13,9 @@ import com.example.myshoppal.models.Product
 import com.example.myshoppal.utils.Constants
 import kotlinx.android.synthetic.main.activity_cart_list.*
 
-
+/**
+ * Cart list activity of the application.
+ */
 class CartListActivity : BaseActivity() {
 
     // A global variable for the product list.
@@ -22,21 +24,22 @@ class CartListActivity : BaseActivity() {
     // A global variable for the cart list items.
     private lateinit var mCartListItems: ArrayList<Cart>
 
+    /**
+     * This function is auto created by Android when the Activity Class is created.
+     */
     override fun onCreate(savedInstanceState: Bundle?) {
         //This call the parent constructor
         super.onCreate(savedInstanceState)
         // This is used to align the xml view to this class
         setContentView(R.layout.activity_cart_list)
 
+        setupActionBar()
 
         btn_checkout.setOnClickListener {
             val intent = Intent(this@CartListActivity, AddressListActivity::class.java)
             intent.putExtra(Constants.EXTRA_SELECT_ADDRESS, true)
             startActivity(intent)
         }
-
-
-        setupActionBar()
     }
 
     override fun onResume() {
@@ -132,6 +135,7 @@ class CartListActivity : BaseActivity() {
             var subTotal: Double = 0.0
 
             for (item in mCartListItems) {
+
                 val availableQuantity = item.stock_quantity.toInt()
 
                 if (availableQuantity > 0) {
@@ -143,7 +147,7 @@ class CartListActivity : BaseActivity() {
             }
 
             tv_sub_total.text = "$$subTotal"
-            // Here we have kept Shipping Charge is fixed as $10 but in your case it may cary. Also, it depends on the loation and total amount.
+            // Here we have kept Shipping Charge is fixed as $10 but in your case it may cary. Also, it depends on the location and total amount.
             tv_shipping_charge.text = "$10.0"
 
             if (subTotal > 0) {
@@ -178,8 +182,6 @@ class CartListActivity : BaseActivity() {
         getCartItemsList()
     }
 
-    // TODO Step 3: Create a function to notify the user about the item quantity updated in the cart list.
-    // START
     /**
      * A function to notify the user about the item quantity updated in the cart list.
      */
@@ -189,5 +191,4 @@ class CartListActivity : BaseActivity() {
 
         getCartItemsList()
     }
-    // END
 }
