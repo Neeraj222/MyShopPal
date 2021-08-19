@@ -1,7 +1,10 @@
 package com.example.myshoppal.activities
 
 import android.os.Bundle
+import android.view.View
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.myshoppal.R
+import com.example.myshoppal.adapters.CartItemsListAdapter
 import com.example.myshoppal.firestore.FirestoreClass
 import com.example.myshoppal.models.Address
 import com.example.myshoppal.models.Cart
@@ -83,10 +86,53 @@ class CheckoutActivity : BaseActivity() {
 
 
     fun successCartItemsList(cartList: ArrayList<Cart>) {
-
         hideProgressDialog()
-        mCartItemsList = cartList
+        for (product in mProductsList) {
+            for (cart in cartList) {
+                if (product.product_id == cart.product_id) {
+                    cart.stock_quantity = product.stock_quantity
+                }
+            }
+        }
 
+        mCartItemsList = cartList
+        rv_cart_list_items.layoutManager = LinearLayoutManager(this@CheckoutActivity)
+        rv_cart_list_items.setHasFixedSize(true)
+
+        // TODO Step 5: Pass the required param.
+        val cartListAdapter = CartItemsListAdapter(this@CheckoutActivity, mCartItemsList, false)
+        rv_cart_list_items.adapter = cartListAdapter
+        // END
+
+        // TODO Step 9: Calculate the subtotal and Total Amount.
+        // START
+        var subTotal: Double = 0.0
+
+        for (item in mCartItemsList) {
+
+            val availableQuantity = item.stock_quantity.toInt()
+
+            if (availableQuantity > 0) {
+                val price = item.price.toDouble()
+                val quantity = item.cart_quantity.toInt()
+
+                subTotal += (price * quantity)
+            }
+        }
+
+        tv_checkout_sub_total.text = "$$subTotal"
+        // Here we have kept Shipping Charge is fixed as $10 but in your case it may cary. Also, it depends on the location and total amount.
+        tv_checkout_shipping_charge.text = "$10.0"
+
+        if (subTotal > 0) {
+            ll_checkout_place_order.visibility = View.VISIBLE
+
+            val total = subTotal + 10
+            tv_checkout_total_amount.text = "$$total"
+        } else {
+            ll_checkout_place_order.visibility = View.GONE
+        }
+        // END
     }
 
 }
