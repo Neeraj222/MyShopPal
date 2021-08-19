@@ -1,23 +1,30 @@
 package com.example.myshoppal.activities
 
 import android.os.Bundle
-import androidx.appcompat.app.AppCompatActivity
 import com.example.myshoppal.R
+import com.example.myshoppal.firestore.FirestoreClass
 import com.example.myshoppal.models.Address
+import com.example.myshoppal.models.Cart
+import com.example.myshoppal.models.Product
 import com.example.myshoppal.utils.Constants
+import kotlinx.android.synthetic.main.activity_cart_list.*
 import kotlinx.android.synthetic.main.activity_checkout.*
 
-class CheckoutActivity : AppCompatActivity() {
+
+class CheckoutActivity : BaseActivity() {
+
 
     private var mAddressDetails: Address? = null
-    
+    private lateinit var mProductsList: ArrayList<Product>
+    private lateinit var mCartItemsList: ArrayList<Cart>
+
     override fun onCreate(savedInstanceState: Bundle?) {
         //This call the parent constructor
         super.onCreate(savedInstanceState)
         // This is used to align the xml view to this class
         setContentView(R.layout.activity_checkout)
-        setupActionBar()
 
+        setupActionBar()
 
         if (intent.hasExtra(Constants.EXTRA_SELECT_ADDRESS)) {
             mAddressDetails =
@@ -35,6 +42,9 @@ class CheckoutActivity : AppCompatActivity() {
             }
             tv_mobile_number.text = mAddressDetails?.mobileNumber
         }
+
+        getProductList()
+
     }
 
     private fun setupActionBar() {
@@ -49,4 +59,34 @@ class CheckoutActivity : AppCompatActivity() {
 
         toolbar_checkout_activity.setNavigationOnClickListener { onBackPressed() }
     }
+
+    private fun getProductList() {
+
+        // Show the progress dialog.
+        showProgressDialog(resources.getString(R.string.please_wait))
+
+        FirestoreClass().getAllProductsList(this@CheckoutActivity)
+    }
+
+
+    fun successProductsListFromFireStore(productsList: ArrayList<Product>) {
+
+        mProductsList = productsList
+        getCartItemsList()
+
+    }
+
+    private fun getCartItemsList() {
+
+        FirestoreClass().getCartList(this@CheckoutActivity)
+    }
+
+
+    fun successCartItemsList(cartList: ArrayList<Cart>) {
+
+        hideProgressDialog()
+        mCartItemsList = cartList
+
+    }
+
 }
