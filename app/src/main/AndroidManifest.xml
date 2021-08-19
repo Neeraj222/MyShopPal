@@ -83,6 +83,13 @@
             android:theme="@style/AppTheme.NoActionBar" />
         <!--END-->
 
+        <!--START-->
+        <activity
+            android:name=".activities.CheckoutActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <!--END-->
+
     </application>
 
 </manifest>
